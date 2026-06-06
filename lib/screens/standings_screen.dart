@@ -17,6 +17,41 @@ class GroupData {
 class StandingsScreen extends ConsumerWidget {
   const StandingsScreen({super.key});
 
+  List<GroupData> _getFallbackGroups() {
+    final List<String> teams = [
+      'USA', 'Mexico', 'Canada', 'Argentina', 'Brazil', 'France', 'England', 'Spain',
+      'Germany', 'Portugal', 'Italy', 'Netherlands', 'Belgium', 'Croatia', 'Uruguay', 'Colombia',
+      'Japan', 'South Korea', 'Iran', 'Australia', 'Senegal', 'Morocco', 'Nigeria', 'Egypt',
+      'Saudi Arabia', 'Qatar', 'Ecuador', 'Peru', 'Chile', 'Sweden', 'Switzerland', 'Denmark',
+      'Serbia', 'Poland', 'Wales', 'Scotland', 'Ukraine', 'Turkey', 'Hungary', 'Austria',
+      'Czechia', 'Greece', 'Ivory Coast', 'Ghana', 'Cameroon', 'Mali', 'Algeria', 'Tunisia'
+    ];
+    final groups = <GroupData>[];
+    final letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+    for (int i = 0; i < 12; i++) {
+      final groupTeams = <dynamic>[];
+      for (int j = 0; j < 4; j++) {
+        final teamName = teams[i * 4 + j];
+        groupTeams.add({
+          'position': j + 1,
+          'team': {
+            'name': teamName,
+            'shortName': teamName.substring(0, 3).toUpperCase(),
+            'crest': '', 
+          },
+          'playedGames': 0,
+          'won': 0,
+          'draw': 0,
+          'lost': 0,
+          'points': 0,
+          'goalDifference': 0,
+        });
+      }
+      groups.add(GroupData(name: letters[i], teams: groupTeams));
+    }
+    return groups;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final standingsAsync = ref.watch(standingsProvider);
@@ -33,24 +68,19 @@ class StandingsScreen extends ConsumerWidget {
           onRetry: () => ref.refresh(standingsProvider),
         ),
         data: (standingsData) {
+          List<GroupData> groups = [];
           if (standingsData == null || standingsData.isEmpty) {
-            return Center(
-              child: Text(
-                'Şu an için puan durumu verisi bulunmuyor.',
-                style: GoogleFonts.orbitron(color: CyberColors.textSecondary, fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-            );
+            groups = _getFallbackGroups();
+          } else {
+            groups = standingsData
+                .where((groupObj) => groupObj['type'] == 'TOTAL')
+                .map((groupObj) {
+              final String rawGroupName = groupObj['group'] ?? '';
+              final String groupName = rawGroupName.replaceAll('GROUP_', '');
+              final List<dynamic> teams = groupObj['table'] ?? [];
+              return GroupData(name: groupName, teams: teams);
+            }).toList();
           }
-          
-          final List<GroupData> groups = standingsData
-              .where((groupObj) => groupObj['type'] == 'TOTAL')
-              .map((groupObj) {
-            final String rawGroupName = groupObj['group'] ?? '';
-            final String groupName = rawGroupName.replaceAll('GROUP_', '');
-            final List<dynamic> teams = groupObj['table'] ?? [];
-            return GroupData(name: groupName, teams: teams);
-          }).toList();
 
           return ListView.builder(
             physics: const BouncingScrollPhysics(),

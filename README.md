@@ -1,3 +1,5 @@
+npx wrangler deploynpx wrangler deploy
+npx wrangler deploy
 # worldcup2026
 
 A new Flutter project.

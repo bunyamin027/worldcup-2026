@@ -4,50 +4,6 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
-const MOCK_FIXTURES = {
-  "matches": [
-    {
-      "id": 1001,
-      "utcDate": "2026-06-11T19:00:00Z",
-      "status": "TIMED",
-      "homeTeam": { "name": "Mexico", "shortName": "MEX", "tla": "MEX", "crest": "https://crests.football-data.org/732.svg" },
-      "awayTeam": { "name": "South Africa", "shortName": "RSA", "tla": "RSA", "crest": "https://crests.football-data.org/759.svg" }
-    },
-    {
-      "id": 1002,
-      "utcDate": "2026-06-12T15:00:00Z",
-      "status": "TIMED",
-      "homeTeam": { "name": "USA", "shortName": "USA", "tla": "USA", "crest": "https://crests.football-data.org/773.svg" },
-      "awayTeam": { "name": "Wales", "shortName": "WAL", "tla": "WAL", "crest": "https://crests.football-data.org/833.svg" }
-    },
-    {
-      "id": 1003,
-      "utcDate": "2026-06-12T19:00:00Z",
-      "status": "TIMED",
-      "homeTeam": { "name": "Canada", "shortName": "CAN", "tla": "CAN", "crest": "https://crests.football-data.org/811.svg" },
-      "awayTeam": { "name": "Japan", "shortName": "JPN", "tla": "JPN", "crest": "https://crests.football-data.org/764.svg" }
-    },
-    {
-      "id": 1004,
-      "utcDate": "2026-06-13T16:00:00Z",
-      "status": "TIMED",
-      "homeTeam": { "name": "Brazil", "shortName": "BRA", "tla": "BRA", "crest": "https://crests.football-data.org/764.svg" },
-      "awayTeam": { "name": "France", "shortName": "FRA", "tla": "FRA", "crest": "https://crests.football-data.org/773.svg" }
-    },
-    {
-      "id": 1005,
-      "utcDate": "2026-06-13T20:00:00Z",
-      "status": "TIMED",
-      "homeTeam": { "name": "Argentina", "shortName": "ARG", "tla": "ARG", "crest": "https://crests.football-data.org/762.svg" },
-      "awayTeam": { "name": "Spain", "shortName": "ESP", "tla": "ESP", "crest": "https://crests.football-data.org/760.svg" }
-    }
-  ]
-};
-
-const MOCK_STANDINGS = {
-  "standings": []
-};
-
 export default {
   async fetch(request, env, ctx) {
     if (request.method === "OPTIONS") {
@@ -57,7 +13,7 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/") {
-      return new Response("World Cup 2026 Mock API Worker is running!", {
+      return new Response("World Cup 2026 Production Worker is running!", {
         status: 200,
         headers: {
           ...CORS_HEADERS,
@@ -67,23 +23,108 @@ export default {
     }
 
     if (url.pathname === "/fixtures") {
-      return new Response(JSON.stringify(MOCK_FIXTURES), {
-        status: 200,
-        headers: {
-          ...CORS_HEADERS,
-          "Content-Type": "application/json",
+      const league = url.searchParams.get("league") || "1";
+      const season = url.searchParams.get("season") || "2026";
+      
+      const cacheKey = `fixtures_${league}_${season}`;
+      
+      const cachedData = await env.KV.get(cacheKey);
+      if (cachedData) {
+        return new Response(cachedData, {
+          status: 200,
+          headers: {
+            ...CORS_HEADERS,
+            "Content-Type": "application/json",
+            "X-Cache": "HIT"
+          }
+        });
+      }
+
+      const apiUrl = `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}`;
+      
+      try {
+        const apiResponse = await fetch(apiUrl, {
+          headers: {
+            "x-apisports-key": env.API_KEY
+          }
+        });
+
+        if (!apiResponse.ok) {
+          return new Response(JSON.stringify({ error: "API-Sports request failed", status: apiResponse.status }), {
+            status: apiResponse.status,
+            headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
+          });
         }
-      });
+
+        const data = await apiResponse.text();
+        
+        ctx.waitUntil(env.KV.put(cacheKey, data, { expirationTtl: 43200 }));
+
+        return new Response(data, {
+          status: 200,
+          headers: {
+            ...CORS_HEADERS,
+            "Content-Type": "application/json",
+            "X-Cache": "MISS"
+          }
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({ error: "Internal Server Error", details: error.message }), {
+          status: 500,
+          headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
+        });
+      }
     }
 
     if (url.pathname === "/standings") {
-      return new Response(JSON.stringify(MOCK_STANDINGS), {
-        status: 200,
-        headers: {
-          ...CORS_HEADERS,
-          "Content-Type": "application/json",
+      const cacheKey = "wc_standings_2026_prod_v1";
+      
+      const cachedData = await env.KV.get(cacheKey);
+      if (cachedData) {
+        return new Response(cachedData, {
+          status: 200,
+          headers: {
+            ...CORS_HEADERS,
+            "Content-Type": "application/json",
+            "X-Cache": "HIT"
+          }
+        });
+      }
+
+      const apiUrl = "https://api.football-data.org/v4/competitions/WC/standings?season=2026";
+      
+      try {
+        const apiResponse = await fetch(apiUrl, {
+          headers: {
+            "X-Auth-Token": env.API_KEY
+          }
+        });
+
+        if (!apiResponse.ok) {
+          return new Response(JSON.stringify({ error: "Football-data API request failed", status: apiResponse.status }), {
+            status: apiResponse.status,
+            headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
+          });
         }
-      });
+
+        const data = await apiResponse.text();
+        
+        ctx.waitUntil(env.KV.put(cacheKey, data, { expirationTtl: 43200 }));
+
+        return new Response(data, {
+          status: 200,
+          headers: {
+            ...CORS_HEADERS,
+            "Content-Type": "application/json",
+            "X-Cache": "MISS"
+          }
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({ error: "Internal Server Error", details: error.message }), {
+          status: 500,
+          headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
+        });
+      }
     }
 
     return new Response("Not Found", { 
