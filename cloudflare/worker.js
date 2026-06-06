@@ -28,16 +28,20 @@ export default {
       
       const cacheKey = `fixtures_${league}_${season}`;
       
-      const cachedData = await env.KV.get(cacheKey);
-      if (cachedData) {
-        return new Response(cachedData, {
-          status: 200,
-          headers: {
-            ...CORS_HEADERS,
-            "Content-Type": "application/json",
-            "X-Cache": "HIT"
+      if (env.KV) {
+        try {
+          const cachedData = await env.KV.get(cacheKey);
+          if (cachedData) {
+            return new Response(cachedData, {
+              status: 200,
+              headers: {
+                ...CORS_HEADERS,
+                "Content-Type": "application/json",
+                "X-Cache": "HIT"
+              }
+            });
           }
-        });
+        } catch(e) {}
       }
 
       const apiUrl = `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}`;
@@ -58,7 +62,11 @@ export default {
 
         const data = await apiResponse.text();
         
-        ctx.waitUntil(env.KV.put(cacheKey, data, { expirationTtl: 43200 }));
+        if (env.KV) {
+          try {
+            ctx.waitUntil(env.KV.put(cacheKey, data, { expirationTtl: 43200 }));
+          } catch(e) {}
+        }
 
         return new Response(data, {
           status: 200,
@@ -79,16 +87,20 @@ export default {
     if (url.pathname === "/standings") {
       const cacheKey = "wc_standings_2026_prod_v1";
       
-      const cachedData = await env.KV.get(cacheKey);
-      if (cachedData) {
-        return new Response(cachedData, {
-          status: 200,
-          headers: {
-            ...CORS_HEADERS,
-            "Content-Type": "application/json",
-            "X-Cache": "HIT"
+      if (env.KV) {
+        try {
+          const cachedData = await env.KV.get(cacheKey);
+          if (cachedData) {
+            return new Response(cachedData, {
+              status: 200,
+              headers: {
+                ...CORS_HEADERS,
+                "Content-Type": "application/json",
+                "X-Cache": "HIT"
+              }
+            });
           }
-        });
+        } catch(e) {}
       }
 
       const apiUrl = "https://api.football-data.org/v4/competitions/WC/standings?season=2026";
@@ -109,7 +121,11 @@ export default {
 
         const data = await apiResponse.text();
         
-        ctx.waitUntil(env.KV.put(cacheKey, data, { expirationTtl: 43200 }));
+        if (env.KV) {
+          try {
+            ctx.waitUntil(env.KV.put(cacheKey, data, { expirationTtl: 43200 }));
+          } catch(e) {}
+        }
 
         return new Response(data, {
           status: 200,
