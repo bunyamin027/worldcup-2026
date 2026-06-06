@@ -9,7 +9,7 @@ import '../models/models.dart';
 // ─── Group Model ─────────────────────────────────────────────────────────────
 class GroupData {
   final String name;
-  final List<Standing> teams;
+  final List<dynamic> teams;
   const GroupData({required this.name, required this.teams});
 }
 
@@ -32,9 +32,8 @@ class StandingsScreen extends ConsumerWidget {
           prefix: 'VERİ HATASI',
           onRetry: () => ref.refresh(standingsProvider),
         ),
-        data: (data) {
-          final List<dynamic> response = data['response'] ?? [];
-          if (response.isEmpty) {
+        data: (standingsData) {
+          if (standingsData.isEmpty) {
             return Center(
               child: Text(
                 'PUAN DURUMU BULUNAMADI',
@@ -42,14 +41,11 @@ class StandingsScreen extends ConsumerWidget {
               ),
             );
           }
-
-          final List<dynamic> standingsData = response.first['league']['standings'] ?? [];
           
-          final List<GroupData> groups = standingsData.map((groupList) {
-            final List<dynamic> list = groupList as List<dynamic>;
-            final teams = list.map((json) => Standing.fromJson(json)).toList();
-            // API usually returns "Group A", "Group B" etc.
-            final groupName = teams.isNotEmpty ? teams.first.group.replaceAll('Group ', '') : '';
+          final List<GroupData> groups = standingsData.map((groupObj) {
+            final String rawGroupName = groupObj['group'] ?? '';
+            final String groupName = rawGroupName.replaceAll('GROUP_', '');
+            final List<dynamic> teams = groupObj['table'] ?? [];
             return GroupData(name: groupName, teams: teams);
           }).toList();
 
@@ -230,11 +226,20 @@ class _GroupCard extends StatelessWidget {
   }
 
   // ── Team Row ──────────────────────────────────────────────────────────────
-  Widget _buildTeamRow(Standing team) {
-    // API-Football returns ranks per group
-    final isQualified = team.rank <= 2;
+  Widget _buildTeamRow(dynamic teamData) {
+    final int rank = teamData['position'] ?? 0;
+    final teamInfo = teamData['team'] ?? {};
+    final String teamName = teamInfo['name'] ?? 'TBD';
+    final String logoUrl = teamInfo['crest'] ?? '';
+    final int played = teamData['playedGames'] ?? 0;
+    final int won = teamData['won'] ?? 0;
+    final int drawn = teamData['draw'] ?? 0;
+    final int lost = teamData['lost'] ?? 0;
+    final int points = teamData['points'] ?? 0;
+    final int goalsDiff = teamData['goalDifference'] ?? 0;
 
-    String gd = team.goalsDiff > 0 ? '+${team.goalsDiff}' : '${team.goalsDiff}';
+    final isQualified = rank <= 2;
+    String gd = goalsDiff > 0 ? '+$goalsDiff' : '$goalsDiff';
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
@@ -254,7 +259,7 @@ class _GroupCard extends StatelessWidget {
           SizedBox(
             width: 22,
             child: Text(
-              '${team.rank}',
+              '$rank',
               style: GoogleFonts.orbitron(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
@@ -266,7 +271,7 @@ class _GroupCard extends StatelessWidget {
 
           // Flag
           Image.network(
-            team.team.logo,
+            logoUrl,
             width: 20,
             height: 20,
             errorBuilder: (c, e, s) => const Icon(Icons.flag, size: 20, color: Colors.white54),
@@ -276,7 +281,7 @@ class _GroupCard extends StatelessWidget {
           // Name
           Expanded(
             child: Text(
-              team.team.name,
+              teamName,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.orbitron(
                 fontSize: 11,
@@ -290,14 +295,14 @@ class _GroupCard extends StatelessWidget {
           ),
 
           // Stats
-          _statCell('${team.played}', 30),
-          _statCell('${team.won}', 30),
-          _statCell('${team.drawn}', 30),
-          _statCell('${team.lost}', 30),
+          _statCell('$played', 30),
+          _statCell('$won', 30),
+          _statCell('$drawn', 30),
+          _statCell('$lost', 30),
           _statCell(gd, 36,
-              color: team.goalsDiff > 0
+              color: goalsDiff > 0
                   ? CyberColors.neonCyan.withOpacity(0.8)
-                  : team.goalsDiff < 0
+                  : goalsDiff < 0
                       ? CyberColors.neonMagenta.withOpacity(0.7)
                       : null),
 
@@ -313,7 +318,7 @@ class _GroupCard extends StatelessWidget {
                 : null,
             child: Center(
               child: Text(
-                '${team.points}',
+                '$points',
                 style: GoogleFonts.orbitron(
                   fontSize: 12,
                   fontWeight: FontWeight.w800,

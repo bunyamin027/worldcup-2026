@@ -87,14 +87,9 @@ class ApiService {
   }
 
   // ── Standings (Puan Durumu) ───────────────────────────────────────────────
-  Future<Map<String, dynamic>> getStandings({
-    required int league,
-    required int season,
-  }) {
-    return _get('/standings', queryParams: {
-      'league': league.toString(),
-      'season': season.toString(),
-    });
+  Future<List<dynamic>> getStandings() async {
+    final response = await _get('/standings');
+    return response['standings'] ?? [];
   }
 
   // ── Fixture Events (Maç Olayları) ─────────────────────────────────────────

@@ -36,9 +36,9 @@ final liveFixturesProvider =
 // 3. Puan Durumu Provider
 // ─────────────────────────────────────────────────────────────────────────────
 final standingsProvider =
-    FutureProvider.autoDispose<Map<String, dynamic>>((ref) async {
+    FutureProvider.autoDispose<List<dynamic>>((ref) async {
   final api = ref.watch(apiServiceProvider);
-  return api.getStandings(league: _wcLeague, season: _wcSeason);
+  return api.getStandings();
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
