@@ -1,135 +1,66 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../main.dart';
-
-// ─── Team Model ──────────────────────────────────────────────────────────────
-class TeamStanding {
-  final String name;
-  final String flag;
-  final int played;
-  final int won;
-  final int drawn;
-  final int lost;
-  final int goalsFor;
-  final int goalsAgainst;
-  final int points;
-
-  const TeamStanding({
-    required this.name,
-    required this.flag,
-    required this.played,
-    required this.won,
-    required this.drawn,
-    required this.lost,
-    required this.goalsFor,
-    required this.goalsAgainst,
-    required this.points,
-  });
-
-  String get gd {
-    final diff = goalsFor - goalsAgainst;
-    return diff > 0 ? '+$diff' : '$diff';
-  }
-}
+import '../providers/providers.dart';
+import '../models/models.dart';
 
 // ─── Group Model ─────────────────────────────────────────────────────────────
 class GroupData {
   final String name;
-  final List<TeamStanding> teams;
+  final List<Standing> teams;
   const GroupData({required this.name, required this.teams});
 }
 
-// ─── 12 Groups × 4 Teams ────────────────────────────────────────────────────
-final List<GroupData> _groups = [
-  GroupData(name: 'A', teams: [
-    const TeamStanding(name: 'BRA', flag: '🇧🇷', played: 3, won: 3, drawn: 0, lost: 0, goalsFor: 7, goalsAgainst: 1, points: 9),
-    const TeamStanding(name: 'GER', flag: '🇩🇪', played: 3, won: 2, drawn: 0, lost: 1, goalsFor: 5, goalsAgainst: 3, points: 6),
-    const TeamStanding(name: 'MAR', flag: '🇲🇦', played: 3, won: 1, drawn: 0, lost: 2, goalsFor: 2, goalsAgainst: 4, points: 3),
-    const TeamStanding(name: 'CAN', flag: '🇨🇦', played: 3, won: 0, drawn: 0, lost: 3, goalsFor: 1, goalsAgainst: 7, points: 0),
-  ]),
-  GroupData(name: 'B', teams: [
-    const TeamStanding(name: 'ARG', flag: '🇦🇷', played: 3, won: 2, drawn: 1, lost: 0, goalsFor: 6, goalsAgainst: 2, points: 7),
-    const TeamStanding(name: 'FRA', flag: '🇫🇷', played: 3, won: 2, drawn: 0, lost: 1, goalsFor: 5, goalsAgainst: 3, points: 6),
-    const TeamStanding(name: 'NGA', flag: '🇳🇬', played: 3, won: 1, drawn: 0, lost: 2, goalsFor: 3, goalsAgainst: 5, points: 3),
-    const TeamStanding(name: 'AUS', flag: '🇦🇺', played: 3, won: 0, drawn: 1, lost: 2, goalsFor: 2, goalsAgainst: 6, points: 1),
-  ]),
-  GroupData(name: 'C', teams: [
-    const TeamStanding(name: 'TUR', flag: '🇹🇷', played: 3, won: 2, drawn: 1, lost: 0, goalsFor: 5, goalsAgainst: 1, points: 7),
-    const TeamStanding(name: 'ESP', flag: '🇪🇸', played: 3, won: 2, drawn: 1, lost: 0, goalsFor: 4, goalsAgainst: 1, points: 7),
-    const TeamStanding(name: 'KOR', flag: '🇰🇷', played: 3, won: 1, drawn: 0, lost: 2, goalsFor: 2, goalsAgainst: 4, points: 3),
-    const TeamStanding(name: 'CRC', flag: '🇨🇷', played: 3, won: 0, drawn: 0, lost: 3, goalsFor: 1, goalsAgainst: 6, points: 0),
-  ]),
-  GroupData(name: 'D', teams: [
-    const TeamStanding(name: 'POR', flag: '🇵🇹', played: 3, won: 3, drawn: 0, lost: 0, goalsFor: 8, goalsAgainst: 2, points: 9),
-    const TeamStanding(name: 'JPN', flag: '🇯🇵', played: 3, won: 1, drawn: 1, lost: 1, goalsFor: 4, goalsAgainst: 4, points: 4),
-    const TeamStanding(name: 'SEN', flag: '🇸🇳', played: 3, won: 1, drawn: 0, lost: 2, goalsFor: 3, goalsAgainst: 5, points: 3),
-    const TeamStanding(name: 'ECU', flag: '🇪🇨', played: 3, won: 0, drawn: 1, lost: 2, goalsFor: 2, goalsAgainst: 6, points: 1),
-  ]),
-  GroupData(name: 'E', teams: [
-    const TeamStanding(name: 'ENG', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', played: 3, won: 2, drawn: 1, lost: 0, goalsFor: 5, goalsAgainst: 1, points: 7),
-    const TeamStanding(name: 'MEX', flag: '🇲🇽', played: 3, won: 2, drawn: 0, lost: 1, goalsFor: 4, goalsAgainst: 3, points: 6),
-    const TeamStanding(name: 'URU', flag: '🇺🇾', played: 3, won: 1, drawn: 0, lost: 2, goalsFor: 3, goalsAgainst: 4, points: 3),
-    const TeamStanding(name: 'IRN', flag: '🇮🇷', played: 3, won: 0, drawn: 1, lost: 2, goalsFor: 1, goalsAgainst: 5, points: 1),
-  ]),
-  GroupData(name: 'F', teams: [
-    const TeamStanding(name: 'NED', flag: '🇳🇱', played: 3, won: 2, drawn: 1, lost: 0, goalsFor: 6, goalsAgainst: 2, points: 7),
-    const TeamStanding(name: 'USA', flag: '🇺🇸', played: 3, won: 2, drawn: 0, lost: 1, goalsFor: 5, goalsAgainst: 3, points: 6),
-    const TeamStanding(name: 'GHA', flag: '🇬🇭', played: 3, won: 1, drawn: 0, lost: 2, goalsFor: 2, goalsAgainst: 4, points: 3),
-    const TeamStanding(name: 'QAT', flag: '🇶🇦', played: 3, won: 0, drawn: 1, lost: 2, goalsFor: 1, goalsAgainst: 5, points: 1),
-  ]),
-  GroupData(name: 'G', teams: [
-    const TeamStanding(name: 'BEL', flag: '🇧🇪', played: 3, won: 2, drawn: 1, lost: 0, goalsFor: 5, goalsAgainst: 2, points: 7),
-    const TeamStanding(name: 'ITA', flag: '🇮🇹', played: 3, won: 1, drawn: 2, lost: 0, goalsFor: 3, goalsAgainst: 2, points: 5),
-    const TeamStanding(name: 'COL', flag: '🇨🇴', played: 3, won: 1, drawn: 0, lost: 2, goalsFor: 3, goalsAgainst: 5, points: 3),
-    const TeamStanding(name: 'SAU', flag: '🇸🇦', played: 3, won: 0, drawn: 1, lost: 2, goalsFor: 2, goalsAgainst: 4, points: 1),
-  ]),
-  GroupData(name: 'H', teams: [
-    const TeamStanding(name: 'CRO', flag: '🇭🇷', played: 3, won: 2, drawn: 1, lost: 0, goalsFor: 4, goalsAgainst: 1, points: 7),
-    const TeamStanding(name: 'DEN', flag: '🇩🇰', played: 3, won: 1, drawn: 2, lost: 0, goalsFor: 3, goalsAgainst: 2, points: 5),
-    const TeamStanding(name: 'SRB', flag: '🇷🇸', played: 3, won: 1, drawn: 0, lost: 2, goalsFor: 3, goalsAgainst: 5, points: 3),
-    const TeamStanding(name: 'CMR', flag: '🇨🇲', played: 3, won: 0, drawn: 1, lost: 2, goalsFor: 2, goalsAgainst: 4, points: 1),
-  ]),
-  GroupData(name: 'I', teams: [
-    const TeamStanding(name: 'POL', flag: '🇵🇱', played: 3, won: 2, drawn: 0, lost: 1, goalsFor: 4, goalsAgainst: 3, points: 6),
-    const TeamStanding(name: 'SUI', flag: '🇨🇭', played: 3, won: 1, drawn: 2, lost: 0, goalsFor: 3, goalsAgainst: 2, points: 5),
-    const TeamStanding(name: 'CHI', flag: '🇨🇱', played: 3, won: 1, drawn: 1, lost: 1, goalsFor: 3, goalsAgainst: 3, points: 4),
-    const TeamStanding(name: 'TUN', flag: '🇹🇳', played: 3, won: 0, drawn: 1, lost: 2, goalsFor: 1, goalsAgainst: 3, points: 1),
-  ]),
-  GroupData(name: 'J', teams: [
-    const TeamStanding(name: 'UKR', flag: '🇺🇦', played: 3, won: 2, drawn: 1, lost: 0, goalsFor: 5, goalsAgainst: 2, points: 7),
-    const TeamStanding(name: 'SWE', flag: '🇸🇪', played: 3, won: 1, drawn: 2, lost: 0, goalsFor: 4, goalsAgainst: 3, points: 5),
-    const TeamStanding(name: 'PAR', flag: '🇵🇾', played: 3, won: 1, drawn: 0, lost: 2, goalsFor: 2, goalsAgainst: 4, points: 3),
-    const TeamStanding(name: 'NZL', flag: '🇳🇿', played: 3, won: 0, drawn: 1, lost: 2, goalsFor: 1, goalsAgainst: 3, points: 1),
-  ]),
-  GroupData(name: 'K', teams: [
-    const TeamStanding(name: 'CZE', flag: '🇨🇿', played: 3, won: 2, drawn: 0, lost: 1, goalsFor: 4, goalsAgainst: 2, points: 6),
-    const TeamStanding(name: 'WAL', flag: '🏴󠁧󠁢󠁷󠁬󠁳󠁿', played: 3, won: 1, drawn: 2, lost: 0, goalsFor: 3, goalsAgainst: 2, points: 5),
-    const TeamStanding(name: 'ALG', flag: '🇩🇿', played: 3, won: 1, drawn: 1, lost: 1, goalsFor: 3, goalsAgainst: 3, points: 4),
-    const TeamStanding(name: 'PER', flag: '🇵🇪', played: 3, won: 0, drawn: 1, lost: 2, goalsFor: 1, goalsAgainst: 4, points: 1),
-  ]),
-  GroupData(name: 'L', teams: [
-    const TeamStanding(name: 'AUT', flag: '🇦🇹', played: 3, won: 2, drawn: 1, lost: 0, goalsFor: 6, goalsAgainst: 3, points: 7),
-    const TeamStanding(name: 'EGY', flag: '🇪🇬', played: 3, won: 1, drawn: 1, lost: 1, goalsFor: 3, goalsAgainst: 3, points: 4),
-    const TeamStanding(name: 'JAM', flag: '🇯🇲', played: 3, won: 1, drawn: 0, lost: 2, goalsFor: 2, goalsAgainst: 4, points: 3),
-    const TeamStanding(name: 'CHN', flag: '🇨🇳', played: 3, won: 0, drawn: 2, lost: 1, goalsFor: 2, goalsAgainst: 3, points: 2),
-  ]),
-];
-
 // ─── Standings Screen ────────────────────────────────────────────────────────
-class StandingsScreen extends StatelessWidget {
+class StandingsScreen extends ConsumerWidget {
   const StandingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final standingsAsync = ref.watch(standingsProvider);
+
     return Scaffold(
       backgroundColor: CyberColors.background,
-      body: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
-        itemCount: _groups.length,
-        itemBuilder: (context, index) {
-          return _GroupCard(group: _groups[index], index: index);
+      body: standingsAsync.when(
+        loading: () => const Center(
+          child: NeonLoadingIndicator(label: 'PUAN DURUMU YÜKLENİYOR...'),
+        ),
+        error: (e, st) => NeonErrorWidget(
+          message: e.toString(),
+          prefix: 'VERİ HATASI',
+          onRetry: () => ref.refresh(standingsProvider),
+        ),
+        data: (data) {
+          final List<dynamic> response = data['response'] ?? [];
+          if (response.isEmpty) {
+            return Center(
+              child: Text(
+                'PUAN DURUMU BULUNAMADI',
+                style: GoogleFonts.orbitron(color: CyberColors.textSecondary),
+              ),
+            );
+          }
+
+          final List<dynamic> standingsData = response.first['league']['standings'] ?? [];
+          
+          final List<GroupData> groups = standingsData.map((groupList) {
+            final List<dynamic> list = groupList as List<dynamic>;
+            final teams = list.map((json) => Standing.fromJson(json)).toList();
+            // API usually returns "Group A", "Group B" etc.
+            final groupName = teams.isNotEmpty ? teams.first.group.replaceAll('Group ', '') : '';
+            return GroupData(name: groupName, teams: teams);
+          }).toList();
+
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
+            itemCount: groups.length,
+            itemBuilder: (context, index) {
+              return _GroupCard(group: groups[index], index: index);
+            },
+          );
         },
       ),
     );
@@ -196,9 +127,7 @@ class _GroupCard extends StatelessWidget {
                   // ── Column Labels ─────────────────────────────────────
                   _buildColumnLabels(),
                   // ── Team Rows ─────────────────────────────────────────
-                  ...group.teams.asMap().entries.map(
-                        (e) => _buildTeamRow(e.key, e.value),
-                      ),
+                  ...group.teams.map((team) => _buildTeamRow(team)),
                   const SizedBox(height: 6),
                 ],
               ),
@@ -301,8 +230,11 @@ class _GroupCard extends StatelessWidget {
   }
 
   // ── Team Row ──────────────────────────────────────────────────────────────
-  Widget _buildTeamRow(int rank, TeamStanding team) {
-    final isQualified = rank < 2;
+  Widget _buildTeamRow(Standing team) {
+    // API-Football returns ranks per group
+    final isQualified = team.rank <= 2;
+
+    String gd = team.goalsDiff > 0 ? '+${team.goalsDiff}' : '${team.goalsDiff}';
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
@@ -322,7 +254,7 @@ class _GroupCard extends StatelessWidget {
           SizedBox(
             width: 22,
             child: Text(
-              '${rank + 1}',
+              '${team.rank}',
               style: GoogleFonts.orbitron(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
@@ -333,13 +265,19 @@ class _GroupCard extends StatelessWidget {
           const SizedBox(width: 8),
 
           // Flag
-          Text(team.flag, style: const TextStyle(fontSize: 20)),
+          Image.network(
+            team.team.logo,
+            width: 20,
+            height: 20,
+            errorBuilder: (c, e, s) => const Icon(Icons.flag, size: 20, color: Colors.white54),
+          ),
           const SizedBox(width: 8),
 
           // Name
           Expanded(
             child: Text(
-              team.name,
+              team.team.name,
+              overflow: TextOverflow.ellipsis,
               style: GoogleFonts.orbitron(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
@@ -356,10 +294,10 @@ class _GroupCard extends StatelessWidget {
           _statCell('${team.won}', 30),
           _statCell('${team.drawn}', 30),
           _statCell('${team.lost}', 30),
-          _statCell(team.gd, 36,
-              color: (team.goalsFor - team.goalsAgainst) > 0
+          _statCell(gd, 36,
+              color: team.goalsDiff > 0
                   ? CyberColors.neonCyan.withOpacity(0.8)
-                  : (team.goalsFor - team.goalsAgainst) < 0
+                  : team.goalsDiff < 0
                       ? CyberColors.neonMagenta.withOpacity(0.7)
                       : null),
 

@@ -1,10 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../main.dart';
+import '../providers/providers.dart';
+import '../models/models.dart';
 
 // ─── Event Types ─────────────────────────────────────────────────────────────
-enum EventType { goal, yellowCard, redCard, substitution }
+enum EventType { goal, yellowCard, redCard, substitution, unknown }
 
 class MatchEvent {
   final int minute;
@@ -12,7 +15,7 @@ class MatchEvent {
   final String player;
   final String? assist;
   final String? playerOut;
-  final bool isHome;
+  final int teamId;
 
   const MatchEvent({
     required this.minute,
@@ -20,42 +23,48 @@ class MatchEvent {
     required this.player,
     this.assist,
     this.playerOut,
-    required this.isHome,
+    required this.teamId,
   });
+
+  factory MatchEvent.fromJson(Map<String, dynamic> json) {
+    final typeStr = json['type']?.toString().toLowerCase() ?? '';
+    final detail = json['detail']?.toString().toLowerCase() ?? '';
+
+    EventType type = EventType.unknown;
+    if (typeStr == 'goal') type = EventType.goal;
+    else if (typeStr == 'card') {
+      if (detail.contains('yellow')) type = EventType.yellowCard;
+      else if (detail.contains('red')) type = EventType.redCard;
+    } else if (typeStr == 'subst') {
+      type = EventType.substitution;
+    }
+
+    final assistName = json['assist'] != null && json['assist']['name'] != null 
+        ? json['assist']['name'].toString() 
+        : null;
+
+    return MatchEvent(
+      minute: json['time']['elapsed'] ?? 0,
+      type: type,
+      player: json['player']['name'] ?? 'Unknown',
+      assist: type == EventType.goal ? assistName : null,
+      playerOut: type == EventType.substitution ? assistName : null,
+      teamId: json['team']['id'] ?? 0,
+    );
+  }
 }
 
-// ─── Mock Data ───────────────────────────────────────────────────────────────
-const String _homeTeam = 'BRA';
-const String _homeFlag = '🇧🇷';
-const int _homeScore = 3;
-
-const String _awayTeam = 'GER';
-const String _awayFlag = '🇩🇪';
-const int _awayScore = 2;
-
-const String _stadium = 'MetLife Stadium, New Jersey';
-const String _group = 'A Grubu – Maç Günü 3';
-const int _matchMinute = 78;
-
-final List<MatchEvent> _events = [
-  const MatchEvent(minute: 8,  type: EventType.goal,         player: 'Vinícius Jr.',   assist: 'Rodrygo',       isHome: true),
-  const MatchEvent(minute: 23, type: EventType.yellowCard,   player: 'Casemiro',                                isHome: true),
-  const MatchEvent(minute: 31, type: EventType.goal,         player: 'J. Musiala',     assist: 'F. Wirtz',      isHome: false),
-  const MatchEvent(minute: 38, type: EventType.substitution, player: 'L. Sané',        playerOut: 'T. Müller',  isHome: false),
-  const MatchEvent(minute: 45, type: EventType.yellowCard,   player: 'A. Rüdiger',                              isHome: false),
-  const MatchEvent(minute: 52, type: EventType.goal,         player: 'Raphinha',        assist: 'Paquetá',      isHome: true),
-  const MatchEvent(minute: 63, type: EventType.redCard,      player: 'A. Rüdiger',                              isHome: false),
-  const MatchEvent(minute: 67, type: EventType.goal,         player: 'F. Wirtz',        assist: 'J. Musiala',   isHome: false),
-  const MatchEvent(minute: 72, type: EventType.substitution, player: 'Endrick',         playerOut: 'Richarlison',isHome: true),
-  const MatchEvent(minute: 76, type: EventType.goal,         player: 'Endrick',         assist: 'Vinícius Jr.', isHome: true),
-];
-
 // ─── Match Detail Screen ─────────────────────────────────────────────────────
-class MatchDetailScreen extends StatelessWidget {
-  const MatchDetailScreen({super.key});
+class MatchDetailScreen extends ConsumerWidget {
+  final int? fixtureId;
+
+  const MatchDetailScreen({super.key, this.fixtureId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final id = fixtureId ?? 0;
+    
+    // Yükleme sırasında arka planın tam oturması için Scaffold
     return Scaffold(
       backgroundColor: CyberColors.background,
       extendBodyBehindAppBar: true,
@@ -77,25 +86,87 @@ class MatchDetailScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            const SizedBox(height: 100),
-            _buildScoreboard(),
-            const SizedBox(height: 32),
-            _buildTimelineHeader(),
-            const SizedBox(height: 8),
-            _buildTimeline(),
-            const SizedBox(height: 48),
-          ],
-        ),
+      body: id == 0 
+          ? const Center(child: Text("Maç ID bulunamadı"))
+          : _buildBody(context, ref, id),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, WidgetRef ref, int id) {
+    final detailAsync = ref.watch(fixtureDetailProvider(id));
+    final eventsAsync = ref.watch(fixtureEventsProvider(id));
+
+    return detailAsync.when(
+      loading: () => const Center(child: NeonLoadingIndicator(label: 'MAÇ BİLGİSİ YÜKLENİYOR...')),
+      error: (e, st) => NeonErrorWidget(
+        message: e.toString(),
+        prefix: 'BAĞLANTI HATASI',
+        onRetry: () => ref.refresh(fixtureDetailProvider(id)),
       ),
+      data: (detailData) {
+        final List<dynamic> response = detailData['response'] ?? [];
+        if (response.isEmpty) {
+          return Center(
+            child: Text(
+              'MAÇ BULUNAMADI',
+              style: GoogleFonts.orbitron(color: CyberColors.textSecondary),
+            ),
+          );
+        }
+
+        final fixtureJson = response.first;
+        final fixture = Fixture.fromJson(fixtureJson);
+
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              const SizedBox(height: 100),
+              _buildScoreboard(fixture),
+              const SizedBox(height: 32),
+              _buildTimelineHeader(),
+              const SizedBox(height: 8),
+              
+              eventsAsync.when(
+                loading: () => const Padding(
+                  padding: EdgeInsets.all(40),
+                  child: NeonLoadingIndicator(label: 'OLAYLAR YÜKLENİYOR...', size: 40),
+                ),
+                error: (e, st) => NeonErrorWidget(message: 'OLAYLAR ALINAMADI', prefix: 'HATA'),
+                data: (eventsData) {
+                  final List<dynamic> evtResponse = eventsData['response'] ?? [];
+                  final events = evtResponse
+                      .map((e) => MatchEvent.fromJson(e))
+                      .where((e) => e.type != EventType.unknown)
+                      .toList();
+                  
+                  if (events.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Text(
+                        'MAÇ OLAYI BULUNAMADI',
+                        style: GoogleFonts.orbitron(color: CyberColors.textSecondary.withOpacity(0.5)),
+                      ),
+                    );
+                  }
+
+                  return _buildTimeline(events, fixture.homeTeam.id);
+                },
+              ),
+              const SizedBox(height: 48),
+            ],
+          ),
+        );
+      },
     );
   }
 
   // ── Scoreboard ────────────────────────────────────────────────────────────
-  Widget _buildScoreboard() {
+  Widget _buildScoreboard(Fixture fixture) {
+    final isLive = ['1H', '2H', 'HT', 'ET', 'P', 'BT', 'LIVE'].contains(fixture.status);
+    final stadium = 'DÜNYA KUPASI STADYUMU'; // Placeholder if API doesn't provide
+    final group = 'DÜNYA KUPASI 2026';
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: ClipRRect(
@@ -122,7 +193,7 @@ class MatchDetailScreen extends StatelessWidget {
               children: [
                 // Group + Stadium
                 Text(
-                  _group,
+                  group,
                   style: GoogleFonts.orbitron(
                     fontSize: 9,
                     fontWeight: FontWeight.w500,
@@ -136,13 +207,13 @@ class MatchDetailScreen extends StatelessWidget {
                 Row(
                   children: [
                     // Home
-                    Expanded(child: _buildTeamColumn(_homeFlag, _homeTeam)),
+                    Expanded(child: _buildTeamColumn(fixture.homeTeam.logo, fixture.homeTeam.name)),
 
                     // Score
-                    _buildScoreCenter(),
+                    _buildScoreCenter(fixture, isLive),
 
                     // Away
-                    Expanded(child: _buildTeamColumn(_awayFlag, _awayTeam)),
+                    Expanded(child: _buildTeamColumn(fixture.awayTeam.logo, fixture.awayTeam.name)),
                   ],
                 ),
 
@@ -157,7 +228,7 @@ class MatchDetailScreen extends StatelessWidget {
                         color: CyberColors.textSecondary.withOpacity(0.4)),
                     const SizedBox(width: 6),
                     Text(
-                      _stadium,
+                      stadium,
                       style: GoogleFonts.orbitron(
                         fontSize: 8,
                         fontWeight: FontWeight.w400,
@@ -175,7 +246,7 @@ class MatchDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTeamColumn(String flag, String name) {
+  Widget _buildTeamColumn(String logoUrl, String name) {
     return Column(
       children: [
         // Flag placeholder – metallic circle
@@ -197,16 +268,23 @@ class MatchDetailScreen extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: Text(flag, style: const TextStyle(fontSize: 34)),
+            child: Image.network(
+              logoUrl,
+              width: 40,
+              height: 40,
+              errorBuilder: (c, e, s) => const Icon(Icons.flag, color: Colors.white54, size: 30),
+            ),
           ),
         ),
         const SizedBox(height: 12),
         Text(
           name,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
           style: GoogleFonts.orbitron(
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.w800,
-            letterSpacing: 4,
+            letterSpacing: 2,
             color: CyberColors.textPrimary,
           ),
         ),
@@ -214,7 +292,9 @@ class MatchDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildScoreCenter() {
+  Widget _buildScoreCenter(Fixture fixture, bool isLive) {
+    final statusText = fixture.status == 'FT' ? 'MAÇ SONUCU' : (isLive && fixture.elapsed != null ? "${fixture.elapsed}'" : fixture.status);
+    
     return Column(
       children: [
         // Live badge
@@ -222,35 +302,40 @@ class MatchDetailScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: const Color(0xFFFF1744).withOpacity(0.15),
+            color: isLive 
+                ? const Color(0xFFFF1744).withOpacity(0.15)
+                : CyberColors.textSecondary.withOpacity(0.1),
             border: Border.all(
-              color: const Color(0xFFFF1744).withOpacity(0.4),
+              color: isLive 
+                  ? const Color(0xFFFF1744).withOpacity(0.4)
+                  : CyberColors.textSecondary.withOpacity(0.2),
             ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color(0xFFFF1744),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFFFF1744).withOpacity(0.6),
-                      blurRadius: 6,
-                    ),
-                  ],
+              if (isLive)
+                Container(
+                  width: 6,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(0xFFFF1744),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFFF1744).withOpacity(0.6),
+                        blurRadius: 6,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 5),
+              if (isLive) const SizedBox(width: 5),
               Text(
-                "$_matchMinute'",
+                statusText,
                 style: GoogleFonts.orbitron(
                   fontSize: 9,
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFFFF1744),
+                  color: isLive ? const Color(0xFFFF1744) : CyberColors.textSecondary,
                 ),
               ),
             ],
@@ -265,30 +350,30 @@ class MatchDetailScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             color: CyberColors.background.withOpacity(0.6),
             border: Border.all(
-              color: CyberColors.neonCyan.withOpacity(0.2),
+              color: isLive ? CyberColors.neonCyan.withOpacity(0.2) : Colors.transparent,
             ),
-            boxShadow: [
+            boxShadow: isLive ? [
               BoxShadow(
                 color: CyberColors.neonCyan.withOpacity(0.1),
                 blurRadius: 20,
               ),
-            ],
+            ] : null,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '$_homeScore',
+                '${fixture.homeScore ?? 0}',
                 style: GoogleFonts.orbitron(
                   fontSize: 38,
                   fontWeight: FontWeight.w900,
                   color: CyberColors.textPrimary,
-                  shadows: [
+                  shadows: isLive ? [
                     Shadow(
                       color: CyberColors.neonCyan.withOpacity(0.5),
                       blurRadius: 14,
                     ),
-                  ],
+                  ] : null,
                 ),
               ),
               Padding(
@@ -303,17 +388,17 @@ class MatchDetailScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                '$_awayScore',
+                '${fixture.awayScore ?? 0}',
                 style: GoogleFonts.orbitron(
                   fontSize: 38,
                   fontWeight: FontWeight.w900,
                   color: CyberColors.textPrimary,
-                  shadows: [
+                  shadows: isLive ? [
                     Shadow(
                       color: CyberColors.neonCyan.withOpacity(0.5),
                       blurRadius: 14,
                     ),
-                  ],
+                  ] : null,
                 ),
               ),
             ],
@@ -359,15 +444,16 @@ class MatchDetailScreen extends StatelessWidget {
   }
 
   // ── Timeline ──────────────────────────────────────────────────────────────
-  Widget _buildTimeline() {
+  Widget _buildTimeline(List<MatchEvent> events, int homeTeamId) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
-        children: _events.asMap().entries.map((entry) {
+        children: events.asMap().entries.map((entry) {
           final i = entry.key;
           final event = entry.value;
-          final isLast = i == _events.length - 1;
-          return _TimelineEventTile(event: event, isLast: isLast);
+          final isLast = i == events.length - 1;
+          final isHome = event.teamId == homeTeamId;
+          return _TimelineEventTile(event: event, isLast: isLast, isHome: isHome);
         }).toList(),
       ),
     );
@@ -378,8 +464,13 @@ class MatchDetailScreen extends StatelessWidget {
 class _TimelineEventTile extends StatelessWidget {
   final MatchEvent event;
   final bool isLast;
+  final bool isHome;
 
-  const _TimelineEventTile({required this.event, required this.isLast});
+  const _TimelineEventTile({
+    required this.event, 
+    required this.isLast,
+    required this.isHome,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -451,17 +542,19 @@ class _TimelineEventTile extends StatelessWidget {
 
               // Connecting line
               if (!isLast)
-                Container(
-                  width: 2,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        config.color.withOpacity(0.3),
-                        CyberColors.borderGlass.withOpacity(0.15),
-                      ],
+                Expanded(
+                  child: Container(
+                    width: 2,
+                    constraints: const BoxConstraints(minHeight: 40),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          config.color.withOpacity(0.3),
+                          CyberColors.borderGlass.withOpacity(0.15),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -472,7 +565,7 @@ class _TimelineEventTile extends StatelessWidget {
           // ── Event content card ────────────────────────────────────
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: 12),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(14),
                 child: BackdropFilter(
@@ -510,9 +603,15 @@ class _TimelineEventTile extends StatelessWidget {
                               ),
                             ),
                             const Spacer(),
+                            // Show home/away text or icon indicator
                             Text(
-                              event.isHome ? _homeFlag : _awayFlag,
-                              style: const TextStyle(fontSize: 16),
+                              isHome ? 'EV SAHİBİ' : 'DEPLASMAN',
+                              style: GoogleFonts.orbitron(
+                                fontSize: 8,
+                                fontWeight: FontWeight.w600,
+                                color: CyberColors.textSecondary.withOpacity(0.6),
+                                letterSpacing: 1,
+                              ),
                             ),
                           ],
                         ),
@@ -619,6 +718,14 @@ class _TimelineEventTile extends StatelessWidget {
           label: 'DEĞİŞİKLİK',
           glowIntensity: 0.2,
           glowRadius: 10,
+        );
+      default:
+        return _EventConfig(
+          icon: Icons.info_outline,
+          color: CyberColors.textSecondary,
+          label: 'OLAY',
+          glowIntensity: 0.1,
+          glowRadius: 5,
         );
     }
   }

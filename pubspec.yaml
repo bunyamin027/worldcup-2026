@@ -12,11 +12,19 @@ dependencies:
   google_fonts: ^6.1.0
   flutter_riverpod: ^2.4.9
   http: ^1.2.0
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
+
+# path_provider_android >=2.3.0 brings jni → objective_c native assets
+# path_provider_foundation >=2.4.0 brings objective_c native assets
+# Both break on macOS 26 beta + Flutter 3.44. Pin to pre-native-asset versions.
+dependency_overrides:
+  path_provider_android: 2.2.12
+  path_provider_foundation: 2.3.2
 
 flutter:
   uses-material-design: true

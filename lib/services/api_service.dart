@@ -57,6 +57,11 @@ class ApiService {
     return _get('/fixtures', queryParams: params);
   }
 
+  // ── Single Fixture ────────────────────────────────────────────────────────
+  Future<Map<String, dynamic>> getFixtureById({required int id}) {
+    return _get('/fixtures', queryParams: {'id': id.toString()});
+  }
+
   // ── Live Fixtures (Canlı Maçlar) ──────────────────────────────────────────
   Future<Map<String, dynamic>> getLiveFixtures() {
     return _get('/fixtures', queryParams: {'live': 'all'});

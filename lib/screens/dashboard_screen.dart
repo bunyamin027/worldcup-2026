@@ -1,85 +1,23 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import '../main.dart';
-
-// ─── Match Model ─────────────────────────────────────────────────────────────
-class MatchData {
-  final String teamA;
-  final String flagA;
-  final String teamB;
-  final String flagB;
-  final String time;
-  final String stadium;
-  final String group;
-  final int? scoreA;
-  final int? scoreB;
-  final bool isLive;
-  final int? minute;
-
-  const MatchData({
-    required this.teamA,
-    required this.flagA,
-    required this.teamB,
-    required this.flagB,
-    required this.time,
-    required this.stadium,
-    required this.group,
-    this.scoreA,
-    this.scoreB,
-    this.isLive = false,
-    this.minute,
-  });
-}
-
-// ─── Mock Data ───────────────────────────────────────────────────────────────
-final List<MatchData> _todayMatches = [
-  const MatchData(
-    teamA: 'BRA', flagA: '🇧🇷',
-    teamB: 'GER', flagB: '🇩🇪',
-    time: '18:00', stadium: 'MetLife Stadium',
-    group: 'A Grubu',
-    scoreA: 2, scoreB: 1,
-    isLive: true, minute: 67,
-  ),
-  const MatchData(
-    teamA: 'ARG', flagA: '🇦🇷',
-    teamB: 'FRA', flagB: '🇫🇷',
-    time: '21:00', stadium: 'AT&T Stadium',
-    group: 'B Grubu',
-    scoreA: 0, scoreB: 0,
-    isLive: true, minute: 12,
-  ),
-  const MatchData(
-    teamA: 'TUR', flagA: '🇹🇷',
-    teamB: 'ESP', flagB: '🇪🇸',
-    time: '22:00', stadium: 'Rose Bowl',
-    group: 'C Grubu',
-  ),
-  const MatchData(
-    teamA: 'POR', flagA: '🇵🇹',
-    teamB: 'JPN', flagB: '🇯🇵',
-    time: '00:00', stadium: 'Azteca Stadium',
-    group: 'D Grubu',
-  ),
-  const MatchData(
-    teamA: 'ENG', flagA: '🏴\u200D☠️',
-    teamB: 'MEX', flagB: '🇲🇽',
-    time: '02:00', stadium: 'BMO Field',
-    group: 'E Grubu',
-  ),
-];
+import '../router/router.dart';
+import '../providers/providers.dart';
+import '../models/models.dart';
 
 // ─── Dashboard Screen ────────────────────────────────────────────────────────
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen>
+class _DashboardScreenState extends ConsumerState<DashboardScreen>
     with SingleTickerProviderStateMixin {
   late Timer _countdownTimer;
   late Duration _remaining;
@@ -90,7 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   void initState() {
     super.initState();
 
-    // Next match countdown – target: today 22:00
+    // Next match countdown – target: today 22:00 (Mock for design)
     final now = DateTime.now();
     var target = DateTime(now.year, now.month, now.day, 22, 0);
     if (target.isBefore(now)) target = target.add(const Duration(days: 1));
@@ -386,36 +324,86 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   // ── Match Carousel ────────────────────────────────────────────────────────
   Widget _buildMatchCarousel() {
-    return SizedBox(
-      height: 200,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        itemCount: _todayMatches.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: _MatchCard(
-              match: _todayMatches[index],
-              glowAnim: _glowAnim,
+    final fixturesAsync = ref.watch(todayFixturesProvider);
+
+    return fixturesAsync.when(
+      loading: () => const Padding(
+        padding: EdgeInsets.symmetric(vertical: 40),
+        child: NeonLoadingIndicator(label: 'MAÇLAR YÜKLENİYOR...'),
+      ),
+      error: (e, st) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: NeonErrorWidget(
+          message: e.toString(),
+          prefix: 'VERİ HATASI',
+          onRetry: () => ref.refresh(todayFixturesProvider),
+        ),
+      ),
+      data: (data) {
+        final List<dynamic> response = data['response'] ?? [];
+        if (response.isEmpty) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(
+                'BUGÜN MAÇ BULUNMUYOR',
+                style: GoogleFonts.orbitron(
+                  color: CyberColors.textSecondary,
+                  letterSpacing: 2,
+                ),
+              ),
             ),
           );
-        },
-      ),
+        }
+
+        final fixtures = response.map((json) => Fixture.fromJson(json)).toList();
+
+        return SizedBox(
+          height: 200,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            itemCount: fixtures.length,
+            itemBuilder: (context, index) {
+              final fixture = fixtures[index];
+              return Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: GestureDetector(
+                  onTap: () {
+                    context.goToMatchDetail(fixture.id);
+                  },
+                  child: _MatchCard(
+                    fixture: fixture,
+                    glowAnim: _glowAnim,
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
 
 // ─── Match Card Widget ──────────────────────────────────────────────────────
 class _MatchCard extends StatelessWidget {
-  final MatchData match;
+  final Fixture fixture;
   final Animation<double> glowAnim;
 
-  const _MatchCard({required this.match, required this.glowAnim});
+  const _MatchCard({required this.fixture, required this.glowAnim});
 
   @override
   Widget build(BuildContext context) {
+    // API-Football short status codes indicating live match
+    final isLive = ['1H', '2H', 'HT', 'ET', 'P', 'BT', 'LIVE'].contains(fixture.status);
+    final timeStr = DateFormat('HH:mm').format(fixture.date.toLocal());
+
+    // API does not always provide group/stadium inside basic fixture without extra includes.
+    // For now we use a placeholder for the Group or round
+    final roundStr = 'DÜNYA KUPASI 2026';
+
     return AnimatedBuilder(
       animation: glowAnim,
       builder: (context, _) {
@@ -423,17 +411,15 @@ class _MatchCard extends StatelessWidget {
           width: 240,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            boxShadow: match.isLive
+            boxShadow: isLive
                 ? [
                     BoxShadow(
-                      color: CyberColors.neonCyan
-                          .withOpacity(0.25 * glowAnim.value),
+                      color: CyberColors.neonCyan.withOpacity(0.25 * glowAnim.value),
                       blurRadius: 24,
                       spreadRadius: 1,
                     ),
                     BoxShadow(
-                      color: CyberColors.neonCyan
-                          .withOpacity(0.08 * glowAnim.value),
+                      color: CyberColors.neonCyan.withOpacity(0.08 * glowAnim.value),
                       blurRadius: 50,
                       spreadRadius: 4,
                     ),
@@ -450,11 +436,10 @@ class _MatchCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white.withOpacity(0.06),
                   border: Border.all(
-                    color: match.isLive
-                        ? CyberColors.neonCyan
-                            .withOpacity(0.3 + 0.2 * glowAnim.value)
+                    color: isLive
+                        ? CyberColors.neonCyan.withOpacity(0.3 + 0.2 * glowAnim.value)
                         : CyberColors.borderGlass,
-                    width: match.isLive ? 1.5 : 1,
+                    width: isLive ? 1.5 : 1,
                   ),
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
@@ -468,23 +453,26 @@ class _MatchCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Top row: group + live badge
+                    // Top row: round + live badge / time
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          match.group,
-                          style: GoogleFonts.orbitron(
-                            fontSize: 9,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 2,
-                            color: CyberColors.textSecondary.withOpacity(0.7),
+                        Expanded(
+                          child: Text(
+                            roundStr,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.orbitron(
+                              fontSize: 9,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 2,
+                              color: CyberColors.textSecondary.withOpacity(0.7),
+                            ),
                           ),
                         ),
-                        if (match.isLive) _buildLiveBadge(),
-                        if (!match.isLive)
+                        if (isLive) _buildLiveBadge(),
+                        if (!isLive)
                           Text(
-                            match.time,
+                            timeStr,
                             style: GoogleFonts.orbitron(
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
@@ -502,52 +490,57 @@ class _MatchCard extends StatelessWidget {
                         Expanded(
                           child: Column(
                             children: [
-                              Text(match.flagA,
-                                  style: const TextStyle(fontSize: 30)),
-                              const SizedBox(height: 6),
+                              Image.network(
+                                fixture.homeTeam.logo,
+                                width: 36,
+                                height: 36,
+                                errorBuilder: (c, e, s) => const Icon(Icons.shield, color: Colors.white54, size: 36),
+                              ),
+                              const SizedBox(height: 8),
                               Text(
-                                match.teamA,
+                                fixture.homeTeam.name,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.orbitron(
-                                  fontSize: 13,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w700,
                                   color: CyberColors.textPrimary,
-                                  letterSpacing: 2,
+                                  letterSpacing: 1,
                                 ),
                               ),
                             ],
                           ),
                         ),
+                        const SizedBox(width: 8),
                         // Score or VS
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 6),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: match.isLive
+                            color: isLive || fixture.status == 'FT'
                                 ? CyberColors.neonCyan.withOpacity(0.08)
                                 : CyberColors.background.withOpacity(0.5),
                             border: Border.all(
-                              color: match.isLive
+                              color: isLive || fixture.status == 'FT'
                                   ? CyberColors.neonCyan.withOpacity(0.2)
                                   : Colors.transparent,
                             ),
                           ),
                           child: Text(
-                            match.isLive
-                                ? '${match.scoreA} - ${match.scoreB}'
+                            (isLive || fixture.status == 'FT' || fixture.status == 'AET' || fixture.status == 'PEN')
+                                ? '${fixture.homeScore ?? 0} - ${fixture.awayScore ?? 0}'
                                 : 'VS',
                             style: GoogleFonts.orbitron(
-                              fontSize: match.isLive ? 16 : 12,
+                              fontSize: isLive ? 16 : 12,
                               fontWeight: FontWeight.w800,
-                              color: match.isLive
+                              color: isLive
                                   ? CyberColors.neonCyan
                                   : CyberColors.textSecondary,
                               letterSpacing: 2,
-                              shadows: match.isLive
+                              shadows: isLive
                                   ? [
                                       Shadow(
-                                        color: CyberColors.neonCyan
-                                            .withOpacity(0.5),
+                                        color: CyberColors.neonCyan.withOpacity(0.5),
                                         blurRadius: 10,
                                       ),
                                     ]
@@ -555,19 +548,26 @@ class _MatchCard extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: Column(
                             children: [
-                              Text(match.flagB,
-                                  style: const TextStyle(fontSize: 30)),
-                              const SizedBox(height: 6),
+                              Image.network(
+                                fixture.awayTeam.logo,
+                                width: 36,
+                                height: 36,
+                                errorBuilder: (c, e, s) => const Icon(Icons.shield, color: Colors.white54, size: 36),
+                              ),
+                              const SizedBox(height: 8),
                               Text(
-                                match.teamB,
+                                fixture.awayTeam.name,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.orbitron(
-                                  fontSize: 13,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w700,
                                   color: CyberColors.textPrimary,
-                                  letterSpacing: 2,
+                                  letterSpacing: 1,
                                 ),
                               ),
                             ],
@@ -578,24 +578,24 @@ class _MatchCard extends StatelessWidget {
 
                     const Spacer(),
 
-                    // Stadium
+                    // Status Bottom
                     Row(
                       children: [
                         Icon(
-                          Icons.stadium_outlined,
+                          Icons.sports_soccer_outlined,
                           size: 12,
                           color: CyberColors.textSecondary.withOpacity(0.5),
                         ),
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
-                            match.stadium,
+                            fixture.status == 'FT' ? 'MAÇ SONUCU' : (isLive ? 'CANLI' : 'BAŞLAMADI'),
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.orbitron(
-                              fontSize: 8,
-                              fontWeight: FontWeight.w400,
+                              fontSize: 9,
+                              fontWeight: FontWeight.w500,
                               letterSpacing: 1,
-                              color: CyberColors.textSecondary.withOpacity(0.5),
+                              color: CyberColors.textSecondary.withOpacity(0.6),
                             ),
                           ),
                         ),
@@ -640,7 +640,7 @@ class _MatchCard extends StatelessWidget {
           ),
           const SizedBox(width: 5),
           Text(
-            "CANLI ${match.minute}'",
+            "CANLI ${fixture.elapsed != null ? "${fixture.elapsed}'" : ""}",
             style: GoogleFonts.orbitron(
               fontSize: 8,
               fontWeight: FontWeight.w700,

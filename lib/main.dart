@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'screens/onboarding_screen.dart';
+import 'router/router.dart';
 
 // ─── Cyber-Space Color Palette ───────────────────────────────────────────────
 class CyberColors {
@@ -92,19 +92,8 @@ class WorldCup2026App extends StatelessWidget {
       title: 'World Cup 2026',
       debugShowCheckedModeBanner: false,
       theme: buildCyberTheme(),
-      home: const OnboardingScreen(),
-    );
-  }
-}
-
-// ─── Temporary Main Screen ──────────────────────────────────────────────────
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: CyberColors.background,
+      initialRoute: AppRoutes.splash,
+      onGenerateRoute: generateRoute,
     );
   }
 }
