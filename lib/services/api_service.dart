@@ -4,8 +4,7 @@ import 'package:http/http.dart' as http;
 
 // ─── API Service – Cloudflare Worker Proxy ──────────────────────────────────
 class ApiService {
-  // Worker URL'inizi buraya yazın
-  static const String _baseUrl = 'https://YOUR_WORKER.workers.dev';
+  static const String _baseUrl = 'https://worldcup-2026.bunyaminkahraman027.workers.dev';
   static const Duration _timeout = Duration(seconds: 12);
 
   final http.Client _client;

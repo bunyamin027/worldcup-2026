@@ -71,3 +71,4 @@ migrate_working_dir/
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !**/ios/Flutter/AppFrameworkInfo.plist
 !**/macos/Flutter/GeneratedPluginRegistrant.swift
+node_modules/
