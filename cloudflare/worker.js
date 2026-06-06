@@ -1,14 +1,14 @@
 // ─── Cloudflare Worker – API-Football Proxy with KV Cache ───────────────────
 // KV Namespace binding: CACHE  (Wrangler → wrangler.toml → kv_namespaces)
-// Secret env vars  : RAPIDAPI_KEY, RAPIDAPI_HOST
+// Secret env vars  : API_KEY
 
 const CACHE_TTL = 300; // 5 dakika (saniye)
-const UPSTREAM   = "https://api-football-v1.p.rapidapi.com/v3";
+const UPSTREAM   = "https://v3.football.api-sports.io";
 
 export default {
   /**
    * @param {Request} request
-   * @param {Object}  env   – CACHE (KV), RAPIDAPI_KEY, RAPIDAPI_HOST
+   * @param {Object}  env   – CACHE (KV), API_KEY
    * @param {Object}  ctx
    */
   async fetch(request, env, ctx) {
@@ -35,8 +35,7 @@ export default {
       const upstreamRes = await fetch(upstreamUrl, {
         method: "GET",
         headers: {
-          "X-RapidAPI-Key":  env.RAPIDAPI_KEY,
-          "X-RapidAPI-Host": env.RAPIDAPI_HOST,
+          "x-apisports-key": env.API_KEY,
         },
       });
 
