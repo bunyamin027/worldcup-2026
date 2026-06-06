@@ -77,7 +77,7 @@ export default {
     }
 
     if (url.pathname === "/standings") {
-      const cacheKey = "wc_standings_2026_v2";
+      const cacheKey = "wc_standings_2022_v1";
       
       const cachedData = await env.KV.get(cacheKey);
       if (cachedData) {

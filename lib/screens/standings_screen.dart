@@ -33,16 +33,19 @@ class StandingsScreen extends ConsumerWidget {
           onRetry: () => ref.refresh(standingsProvider),
         ),
         data: (standingsData) {
-          if (standingsData.isEmpty) {
+          if (standingsData == null || standingsData.isEmpty) {
             return Center(
               child: Text(
-                'PUAN DURUMU BULUNAMADI',
-                style: GoogleFonts.orbitron(color: CyberColors.textSecondary),
+                'Şu an için puan durumu verisi bulunmuyor.',
+                style: GoogleFonts.orbitron(color: CyberColors.textSecondary, fontSize: 16),
+                textAlign: TextAlign.center,
               ),
             );
           }
           
-          final List<GroupData> groups = standingsData.map((groupObj) {
+          final List<GroupData> groups = standingsData
+              .where((groupObj) => groupObj['type'] == 'TOTAL')
+              .map((groupObj) {
             final String rawGroupName = groupObj['group'] ?? '';
             final String groupName = rawGroupName.replaceAll('GROUP_', '');
             final List<dynamic> teams = groupObj['table'] ?? [];
@@ -227,16 +230,17 @@ class _GroupCard extends StatelessWidget {
 
   // ── Team Row ──────────────────────────────────────────────────────────────
   Widget _buildTeamRow(dynamic teamData) {
-    final int rank = teamData['position'] ?? 0;
-    final teamInfo = teamData['team'] ?? {};
-    final String teamName = teamInfo['name'] ?? 'TBD';
-    final String logoUrl = teamInfo['crest'] ?? '';
-    final int played = teamData['playedGames'] ?? 0;
-    final int won = teamData['won'] ?? 0;
-    final int drawn = teamData['draw'] ?? 0;
-    final int lost = teamData['lost'] ?? 0;
-    final int points = teamData['points'] ?? 0;
-    final int goalsDiff = teamData['goalDifference'] ?? 0;
+    if (teamData == null || teamData is! Map) return const SizedBox.shrink();
+    final int rank = int.tryParse(teamData['position']?.toString() ?? '0') ?? 0;
+    final Map<String, dynamic> teamInfo = teamData['team'] is Map ? teamData['team'] : {};
+    final String teamName = teamInfo['shortName']?.toString() ?? teamInfo['name']?.toString() ?? 'TBD';
+    final String logoUrl = teamInfo['crest']?.toString() ?? '';
+    final int played = int.tryParse(teamData['playedGames']?.toString() ?? '0') ?? 0;
+    final int won = int.tryParse(teamData['won']?.toString() ?? '0') ?? 0;
+    final int drawn = int.tryParse(teamData['draw']?.toString() ?? '0') ?? 0;
+    final int lost = int.tryParse(teamData['lost']?.toString() ?? '0') ?? 0;
+    final int points = int.tryParse(teamData['points']?.toString() ?? '0') ?? 0;
+    final int goalsDiff = int.tryParse(teamData['goalDifference']?.toString() ?? '0') ?? 0;
 
     final isQualified = rank <= 2;
     String gd = goalsDiff > 0 ? '+$goalsDiff' : '$goalsDiff';

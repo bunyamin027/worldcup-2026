@@ -13,9 +13,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<dynamic> _allFixtures = [];
   bool _isLoading = true;
   
-  // Varsayılan olarak bugünü değil, turnuvanın açılış gününü seçili tutalım (Örn: 11 Haziran 2026)
+  // Varsayılan olarak bugünü değil, turnuvanın açılış gününü seçili tutalım (Örn: 20 Kasım 2022)
   // Turnuva başladığında bunu DateTime.now() yapabilirsin.
-  DateTime _selectedDate = DateTime(2026, 6, 11); 
+  DateTime _selectedDate = DateTime(2022, 11, 20); 
 
   // Kaydırıcı için 30 günlük bir tarih listesi oluşturalım
   late List<DateTime> _dateList;
@@ -28,9 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _generateDateList() {
-    // 11 Haziran 2026'dan itibaren 40 günlük bir takvim
-    DateTime startDate = DateTime(2026, 6, 11);
-    _dateList = List.generate(40, (index) => startDate.add(Duration(days: index)));
+    // 20 Kasım 2022'den itibaren 30 günlük bir takvim
+    DateTime startDate = DateTime(2022, 11, 20);
+    _dateList = List.generate(30, (index) => startDate.add(Duration(days: index)));
   }
 
   Future<void> _fetchData() async {
