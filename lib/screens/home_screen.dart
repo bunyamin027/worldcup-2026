@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<dynamic> get _filteredFixtures {
     String selectedDateString = DateFormat('yyyy-MM-dd').format(_selectedDate);
     return _allFixtures.where((fixture) {
-      String fixtureDate = fixture['fixture']['date'].toString().substring(0, 10);
+      String fixtureDate = fixture['utcDate'].toString().substring(0, 10);
       return fixtureDate == selectedDateString;
     }).toList();
   }
@@ -159,9 +159,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(match['teams']['home']['name'] ?? 'Ev Sahibi', style: const TextStyle(color: Colors.white, fontSize: 16)),
+              Text(match['homeTeam']['shortName'] ?? match['homeTeam']['name'] ?? 'TBD', style: const TextStyle(color: Colors.white, fontSize: 16)),
               const Text('VS', style: TextStyle(color: Color(0xFFFF00FF), fontWeight: FontWeight.bold)),
-              Text(match['teams']['away']['name'] ?? 'Deplasman', style: const TextStyle(color: Colors.white, fontSize: 16)),
+              Text(match['awayTeam']['shortName'] ?? match['awayTeam']['name'] ?? 'TBD', style: const TextStyle(color: Colors.white, fontSize: 16)),
             ],
           ),
         );

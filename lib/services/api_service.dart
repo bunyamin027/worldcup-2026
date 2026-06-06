@@ -21,7 +21,7 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        return data['response'] ?? [];
+        return data['matches'] ?? [];
       } else {
         throw Exception('Sunucu hatası: ${response.statusCode}');
       }
