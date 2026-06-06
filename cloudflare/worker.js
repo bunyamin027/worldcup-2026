@@ -24,7 +24,7 @@ export default {
 
     if (url.pathname === "/fixtures") {
       const league = url.searchParams.get("league") || "1";
-      const season = url.searchParams.get("season") || "2026";
+      const season = url.searchParams.get("season") || "2022";
       
       const cacheKey = `fixtures_${league}_${season}`;
       
@@ -91,7 +91,7 @@ export default {
         });
       }
 
-      const apiUrl = "https://api.football-data.org/v4/competitions/WC/standings";
+      const apiUrl = "https://api.football-data.org/v4/competitions/WC/standings?season=2022";
       
       try {
         const apiResponse = await fetch(apiUrl, {
