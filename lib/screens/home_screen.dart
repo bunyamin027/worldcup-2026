@@ -147,7 +147,12 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       itemBuilder: (context, index) {
         var match = dailyMatches[index];
-        // Maç kartı tasarımı (Kendi cam efektli kart tasarımını buraya entegre edebilirsin)
+        
+        // UTC tarihini yerel saate çevirip sadece saat-dakika olarak formatlıyoruz
+        DateTime localTime = DateTime.parse(match['utcDate'].toString()).toLocal();
+        String formattedTime = DateFormat('HH:mm').format(localTime);
+
+        // Maç kartı tasarımı
         return Container(
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(16),
@@ -159,9 +164,42 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(match['homeTeam']['shortName'] ?? match['homeTeam']['name'] ?? 'TBD', style: const TextStyle(color: Colors.white, fontSize: 16)),
-              const Text('VS', style: TextStyle(color: Color(0xFFFF00FF), fontWeight: FontWeight.bold)),
-              Text(match['awayTeam']['shortName'] ?? match['awayTeam']['name'] ?? 'TBD', style: const TextStyle(color: Colors.white, fontSize: 16)),
+              Expanded(
+                child: Text(
+                  match['homeTeam']['shortName'] ?? match['homeTeam']['name'] ?? 'TBD', 
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('VS', style: TextStyle(color: Color(0xFFFF00FF), fontWeight: FontWeight.bold, fontSize: 16)),
+                  const SizedBox(height: 4),
+                  Text(
+                    formattedTime,
+                    style: const TextStyle(
+                      color: Colors.cyan,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                      shadows: [
+                        Shadow(
+                          color: Colors.cyan,
+                          blurRadius: 8.0,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Text(
+                  match['awayTeam']['shortName'] ?? match['awayTeam']['name'] ?? 'TBD', 
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  textAlign: TextAlign.right,
+                ),
+              ),
             ],
           ),
         );
