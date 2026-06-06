@@ -4,12 +4,32 @@ import 'package:http/http.dart' as http;
 
 // ─── API Service – Cloudflare Worker Proxy ──────────────────────────────────
 class ApiService {
-  static const String _baseUrl = 'https://worldcup-2026.bunyaminkahraman027.workers.dev';
+  // Buraya kendi Cloudflare Worker URL'ini koyacaksın
+  static const String baseUrl = 'https://worldcup-2026.bunyaminkahraman027.workers.dev';
   static const Duration _timeout = Duration(seconds: 12);
 
   final http.Client _client;
 
   ApiService({http.Client? client}) : _client = client ?? http.Client();
+
+  // Tüm 2026 Dünya Kupası fikstürünü tek seferde çeker
+  static Future<List<dynamic>> getAllFixtures() async {
+    try {
+      // league=1 (Dünya Kupası), season=2026
+      final url = Uri.parse('$baseUrl/fixtures?league=1&season=2026');
+      final response = await http.get(url).timeout(const Duration(seconds: 15));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return data['response'] ?? [];
+      } else {
+        throw Exception('Sunucu hatası: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('API Hata detayı: $e');
+      return [];
+    }
+  }
 
   // ── Generic GET ───────────────────────────────────────────────────────────
   Future<Map<String, dynamic>> _get(
@@ -17,7 +37,7 @@ class ApiService {
     Map<String, String>? queryParams,
   }) async {
     try {
-      final uri = Uri.parse('$_baseUrl$endpoint').replace(
+      final uri = Uri.parse('$baseUrl$endpoint').replace(
         queryParameters: queryParams,
       );
 

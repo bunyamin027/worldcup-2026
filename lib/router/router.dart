@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../main.dart';
-import '../screens/dashboard_screen.dart';
+import '../screens/home_screen.dart';
 import '../screens/standings_screen.dart';
 import '../screens/match_detail_screen.dart';
 
@@ -414,7 +414,7 @@ class _AppShellState extends State<AppShell> with SingleTickerProviderStateMixin
 
   // Sayfalar – IndexedStack ile anlık geçiş; state korunur
   static const _pages = <Widget>[
-    DashboardScreen(),
+    HomeScreen(),
     StandingsScreen(),
   ];
 

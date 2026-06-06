@@ -1,90 +1,84 @@
-// ─── Cloudflare Worker – API-Football Proxy with KV Cache ───────────────────
-// KV Namespace binding: CACHE  (Wrangler → wrangler.toml → kv_namespaces)
-// Secret env vars  : API_KEY
-
-const CACHE_TTL = 300; // 5 dakika (saniye)
-const UPSTREAM   = "https://v3.football.api-sports.io";
-
-export default {
-  /**
-   * @param {Request} request
-   * @param {Object}  env   – CACHE (KV), API_KEY
-   * @param {Object}  ctx
-   */
-  async fetch(request, env, ctx) {
-    // ── CORS Pre-flight ─────────────────────────────────────────────────
-    if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: corsHeaders() });
-    }
-
-    try {
-      const url = new URL(request.url);
-      const endpoint = url.pathname;            // e.g. /fixtures
-      const query    = url.search;              // e.g. ?league=1&season=2026
-      const cacheKey = `${endpoint}${query}`;
-
-      // ── 1. KV Cache Lookup ──────────────────────────────────────────
-      const cached = await env.CACHE.get(cacheKey);
-      if (cached !== null) {
-        return jsonResponse(JSON.parse(cached), 200, true);
-      }
-
-      // ── 2. Upstream Fetch ───────────────────────────────────────────
-      const upstreamUrl = `${UPSTREAM}${endpoint}${query}`;
-
-      const upstreamRes = await fetch(upstreamUrl, {
-        method: "GET",
-        headers: {
-          "x-apisports-key": env.API_KEY,
-        },
-      });
-
-      if (!upstreamRes.ok) {
-        return jsonResponse(
-          { error: "Upstream error", status: upstreamRes.status },
-          upstreamRes.status,
-          false,
-        );
-      }
-
-      const data = await upstreamRes.json();
-
-      // ── 3. KV Cache Store (non-blocking) ────────────────────────────
-      ctx.waitUntil(
-        env.CACHE.put(cacheKey, JSON.stringify(data), {
-          expirationTtl: CACHE_TTL,
-        }),
-      );
-
-      return jsonResponse(data, 200, false);
-    } catch (err) {
-      return jsonResponse(
-        { error: "Worker internal error", message: err.message },
-        500,
-        false,
-      );
-    }
-  },
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
 };
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-function corsHeaders() {
-  return {
-    "Access-Control-Allow-Origin":  "*",
-    "Access-Control-Allow-Methods": "GET, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Max-Age":       "86400",
-  };
-}
+export default {
+  async fetch(request, env, ctx) {
+    if (request.method === "OPTIONS") {
+      return new Response(null, { headers: CORS_HEADERS });
+    }
 
-function jsonResponse(body, status, fromCache) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: {
-      "Content-Type":                "application/json;charset=UTF-8",
-      "Access-Control-Allow-Origin": "*",
-      "X-Cache":                     fromCache ? "HIT" : "MISS",
-      "Cache-Control":               "public, max-age=300",
-    },
-  });
-}
+    const url = new URL(request.url);
+
+    if (url.pathname === "/") {
+      return new Response("World Cup 2026 Proxy Worker is running!", {
+        status: 200,
+        headers: {
+          ...CORS_HEADERS,
+          "Content-Type": "text/plain",
+        },
+      });
+    }
+
+    if (url.pathname === "/fixtures") {
+      const league = url.searchParams.get("league") || "1";
+      const season = url.searchParams.get("season") || "2026";
+      
+      const cacheKey = `fixtures_${league}_${season}`;
+      
+      const cachedData = await env.KV.get(cacheKey);
+      if (cachedData) {
+        return new Response(cachedData, {
+          status: 200,
+          headers: {
+            ...CORS_HEADERS,
+            "Content-Type": "application/json",
+            "X-Cache": "HIT"
+          }
+        });
+      }
+
+      const apiUrl = `https://v3.football.api-sports.io/fixtures?league=${league}&season=${season}`;
+      
+      try {
+        const apiResponse = await fetch(apiUrl, {
+          headers: {
+            "x-apisports-key": env.API_KEY
+          }
+        });
+
+        if (!apiResponse.ok) {
+          return new Response(JSON.stringify({ error: "API-Sports request failed", status: apiResponse.status }), {
+            status: apiResponse.status,
+            headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
+          });
+        }
+
+        const data = await apiResponse.text();
+        
+        ctx.waitUntil(env.KV.put(cacheKey, data, { expirationTtl: 43200 }));
+
+        return new Response(data, {
+          status: 200,
+          headers: {
+            ...CORS_HEADERS,
+            "Content-Type": "application/json",
+            "X-Cache": "MISS"
+          }
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({ error: "Internal Server Error", details: error.message }), {
+          status: 500,
+          headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
+        });
+      }
+    }
+
+    return new Response("Not Found", { 
+      status: 404, 
+      headers: { ...CORS_HEADERS, "Content-Type": "text/plain" } 
+    });
+  }
+};
