@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../data/mock_data.dart';
 
 // ─── API Service – Cloudflare Worker Proxy ──────────────────────────────────
 class ApiService {
@@ -14,21 +15,8 @@ class ApiService {
 
   // Tüm 2026 Dünya Kupası fikstürünü tek seferde çeker
   static Future<List<dynamic>> getAllFixtures() async {
-    try {
-      // league=1 (Dünya Kupası), season=2026
-      final url = Uri.parse('$baseUrl/fixtures?league=1&season=2026');
-      final response = await http.get(url).timeout(const Duration(seconds: 15));
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return data['matches'] ?? [];
-      } else {
-        throw Exception('Sunucu hatası: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('API Hata detayı: $e');
-      return [];
-    }
+    // API devredışı, mock data döndür
+    return MockData.fixtures;
   }
 
   // ── Generic GET ───────────────────────────────────────────────────────────
@@ -88,8 +76,8 @@ class ApiService {
 
   // ── Standings (Puan Durumu) ───────────────────────────────────────────────
   Future<List<dynamic>> getStandings() async {
-    final response = await _get('/standings');
-    return response['standings'] ?? [];
+    // API devredışı, mock data döndür
+    return MockData.standings;
   }
 
   // ── Fixture Events (Maç Olayları) ─────────────────────────────────────────

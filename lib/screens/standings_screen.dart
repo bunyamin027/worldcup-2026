@@ -14,52 +14,94 @@ class GroupData {
 }
 
 // ─── Standings Screen ────────────────────────────────────────────────────────
+final List<GroupData> _worldCup2026Groups = [
+  GroupData(name: 'A', teams: [
+    {'position': 1, 'team': {'name': 'Meksika', 'crest': 'https://flagcdn.com/w80/mx.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Güney Afrika', 'crest': 'https://flagcdn.com/w80/za.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'Güney Kore', 'crest': 'https://flagcdn.com/w80/kr.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'Çekya', 'crest': 'https://flagcdn.com/w80/cz.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'B', teams: [
+    {'position': 1, 'team': {'name': 'Kanada', 'crest': 'https://flagcdn.com/w80/ca.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Bosna Hersek', 'crest': 'https://flagcdn.com/w80/ba.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'Katar', 'crest': 'https://flagcdn.com/w80/qa.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'İsviçre', 'crest': 'https://flagcdn.com/w80/ch.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'C', teams: [
+    {'position': 1, 'team': {'name': 'Brezilya', 'crest': 'https://flagcdn.com/w80/br.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Fas', 'crest': 'https://flagcdn.com/w80/ma.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'Haiti', 'crest': 'https://flagcdn.com/w80/ht.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'İskoçya', 'crest': 'https://flagcdn.com/w80/gb-sct.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'D', teams: [
+    {'position': 1, 'team': {'name': 'ABD', 'crest': 'https://flagcdn.com/w80/us.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Paraguay', 'crest': 'https://flagcdn.com/w80/py.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'Avustralya', 'crest': 'https://flagcdn.com/w80/au.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'Türkiye', 'crest': 'https://flagcdn.com/w80/tr.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'E', teams: [
+    {'position': 1, 'team': {'name': 'Almanya', 'crest': 'https://flagcdn.com/w80/de.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Curaçao', 'crest': 'https://flagcdn.com/w80/cw.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'Fildişi Sahili', 'crest': 'https://flagcdn.com/w80/ci.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'Ekvador', 'crest': 'https://flagcdn.com/w80/ec.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'F', teams: [
+    {'position': 1, 'team': {'name': 'Hollanda', 'crest': 'https://flagcdn.com/w80/nl.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Japonya', 'crest': 'https://flagcdn.com/w80/jp.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'İsveç', 'crest': 'https://flagcdn.com/w80/se.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'Tunus', 'crest': 'https://flagcdn.com/w80/tn.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'G', teams: [
+    {'position': 1, 'team': {'name': 'Belçika', 'crest': 'https://flagcdn.com/w80/be.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Mısır', 'crest': 'https://flagcdn.com/w80/eg.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'İran', 'crest': 'https://flagcdn.com/w80/ir.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'Yeni Zelanda', 'crest': 'https://flagcdn.com/w80/nz.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'H', teams: [
+    {'position': 1, 'team': {'name': 'İspanya', 'crest': 'https://flagcdn.com/w80/es.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Yeşil Burun Adaları', 'crest': 'https://flagcdn.com/w80/cv.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'Suudi Arabistan', 'crest': 'https://flagcdn.com/w80/sa.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'Uruguay', 'crest': 'https://flagcdn.com/w80/uy.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'I', teams: [
+    {'position': 1, 'team': {'name': 'Fransa', 'crest': 'https://flagcdn.com/w80/fr.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Senegal', 'crest': 'https://flagcdn.com/w80/sn.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'Irak', 'crest': 'https://flagcdn.com/w80/iq.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'Norveç', 'crest': 'https://flagcdn.com/w80/no.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'J', teams: [
+    {'position': 1, 'team': {'name': 'Arjantin', 'crest': 'https://flagcdn.com/w80/ar.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Cezayir', 'crest': 'https://flagcdn.com/w80/dz.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'Avusturya', 'crest': 'https://flagcdn.com/w80/at.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'Ürdün', 'crest': 'https://flagcdn.com/w80/jo.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'K', teams: [
+    {'position': 1, 'team': {'name': 'Portekiz', 'crest': 'https://flagcdn.com/w80/pt.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Kongo DC', 'crest': 'https://flagcdn.com/w80/cd.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'Özbekistan', 'crest': 'https://flagcdn.com/w80/uz.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'Kolombiya', 'crest': 'https://flagcdn.com/w80/co.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+  GroupData(name: 'L', teams: [
+    {'position': 1, 'team': {'name': 'İngiltere', 'crest': 'https://flagcdn.com/w80/gb-eng.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 2, 'team': {'name': 'Hırvatistan', 'crest': 'https://flagcdn.com/w80/hr.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 3, 'team': {'name': 'Gana', 'crest': 'https://flagcdn.com/w80/gh.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+    {'position': 4, 'team': {'name': 'Panama', 'crest': 'https://flagcdn.com/w80/pa.png'}, 'playedGames': 0, 'won': 0, 'draw': 0, 'lost': 0, 'points': 0, 'goalDifference': 0},
+  ]),
+];
+
 class StandingsScreen extends ConsumerWidget {
   const StandingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final standingsAsync = ref.watch(standingsProvider);
-
     return Scaffold(
       backgroundColor: CyberColors.background,
-      body: standingsAsync.when(
-        loading: () => const Center(
-          child: NeonLoadingIndicator(label: 'PUAN DURUMU YÜKLENİYOR...'),
-        ),
-        error: (e, st) => NeonErrorWidget(
-          message: e.toString(),
-          prefix: 'VERİ HATASI',
-          onRetry: () => ref.refresh(standingsProvider),
-        ),
-        data: (standingsData) {
-          if (standingsData == null || standingsData.isEmpty) {
-            return Center(
-              child: Text(
-                'Şu an için puan durumu verisi bulunmuyor.',
-                style: GoogleFonts.orbitron(color: CyberColors.textSecondary, fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-            );
-          }
-          
-          final List<GroupData> groups = standingsData
-              .where((groupObj) => groupObj['type'] == 'TOTAL')
-              .map((groupObj) {
-            final String rawGroupName = groupObj['group'] ?? '';
-            final String groupName = rawGroupName.replaceAll('GROUP_', '');
-            final List<dynamic> teams = groupObj['table'] ?? [];
-            return GroupData(name: groupName, teams: teams);
-          }).toList();
-
-          return ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
-            itemCount: groups.length,
-            itemBuilder: (context, index) {
-              return _GroupCard(group: groups[index], index: index);
-            },
-          );
+      body: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
+        itemCount: _worldCup2026Groups.length,
+        itemBuilder: (context, index) {
+          return _GroupCard(group: _worldCup2026Groups[index], index: index);
         },
       ),
     );

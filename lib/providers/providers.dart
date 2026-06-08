@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/api_service.dart';
+import '../models/static_fixtures.dart';
 
 // ─── Sabitler ────────────────────────────────────────────────────────────────
 const int _wcLeague = 1; // FIFA World Cup 2026 league ID
@@ -18,11 +19,44 @@ final apiServiceProvider = Provider<ApiService>((_) => ApiService());
 // ─────────────────────────────────────────────────────────────────────────────
 final todayFixturesProvider =
     FutureProvider.autoDispose<Map<String, dynamic>>((ref) async {
-  final api = ref.watch(apiServiceProvider);
-  final today = DateTime.now();
-  final date =
-      '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
-  return api.getFixtures(date: date, league: _wcLeague, season: _wcSeason);
+  DateTime targetDate = DateTime.now();
+  // Turnuva dışında isek, örnek olması için ilk günü göster
+  if (targetDate.isBefore(DateTime(2026, 6, 11)) || targetDate.isAfter(DateTime(2026, 7, 20))) {
+    targetDate = DateTime(2026, 6, 11);
+  }
+  final dateString = '${targetDate.year}-${targetDate.month.toString().padLeft(2, '0')}-${targetDate.day.toString().padLeft(2, '0')}';
+
+  final todayMatches = worldCup2026StaticFixtures.where((match) {
+    return match['utcDate'].toString().startsWith(dateString);
+  }).toList();
+
+  final List<dynamic> mappedMatches = todayMatches.asMap().entries.map((entry) {
+    int idx = entry.key;
+    var match = entry.value;
+    return {
+      'fixture': {
+        'id': idx + 100, // mock id
+        'date': match['utcDate'],
+        'status': {'short': 'NS', 'elapsed': null}
+      },
+      'teams': {
+        'home': {
+          'id': idx * 2 + 1000, 
+          'name': match['homeTeam']['name'], 
+          // Match the team logos loosely or keep placeholder
+          'logo': ''
+        },
+        'away': {
+          'id': idx * 2 + 1001, 
+          'name': match['awayTeam']['name'], 
+          'logo': ''
+        }
+      },
+      'goals': {'home': null, 'away': null}
+    };
+  }).toList();
+
+  return {'response': mappedMatches};
 });
 
 // Canlı maçlar (opsiyonel – dashboard'da rozet için kullanılabilir)

@@ -6,6 +6,7 @@ import '../main.dart';
 import '../screens/home_screen.dart';
 import '../screens/standings_screen.dart';
 import '../screens/match_detail_screen.dart';
+import '../screens/settings_screen.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Route Names
@@ -410,12 +411,17 @@ class _AppShellState extends State<AppShell> with SingleTickerProviderStateMixin
       icon: Icons.leaderboard_rounded,
       label: 'PUAN',
     ),
+    _TabItem(
+      icon: Icons.settings_rounded,
+      label: 'AYARLAR',
+    ),
   ];
 
   // Sayfalar – IndexedStack ile anlık geçiş; state korunur
   static const _pages = <Widget>[
     HomeScreen(),
     StandingsScreen(),
+    SettingsScreen(),
   ];
 
   @override
