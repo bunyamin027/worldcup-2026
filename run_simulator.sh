@@ -5,7 +5,7 @@ xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug
 if [ $? -eq 0 ]; then
     echo "✅ Derleme başarılı! Simülatöre yükleniyor..."
     xcrun simctl install booted "build/ios/Debug-iphonesimulator/Runner.app"
-    xcrun simctl launch booted com.example.worldcup2026
+    xcrun simctl launch booted com.kahramanapp.worldcup2026
     echo "🎉 Başarıyla simülatörde açıldı! Tasarımı inceleyebilirsiniz."
 else
     echo "❌ Derleme başarısız oldu."

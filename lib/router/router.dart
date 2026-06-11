@@ -322,7 +322,7 @@ class _SplashScreenState extends State<SplashScreen>
   Widget _buildTitle() {
     final glow = _pulseAnim.value;
     return Text(
-      'WORLD CUP 2026',
+      'FOOTBALL 2026',
       style: GoogleFonts.orbitron(
         fontSize: 28,
         fontWeight: FontWeight.w900,

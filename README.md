@@ -1,6 +1,6 @@
-# 🏆 FIFA World Cup 2026 — Mobil Uygulama
+# 🏆 Football 2026 Live Updates — Mobil Uygulama
 
-> Siber-uzay temalı, glassmorphism tasarımlı FIFA Dünya Kupası 2026 takip uygulaması.
+> Siber-uzay temalı, glassmorphism tasarımlı Football 2026 takip uygulaması.
 
 ---
 

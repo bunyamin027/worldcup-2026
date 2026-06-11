@@ -92,7 +92,7 @@ class WorldCup2026App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'World Cup 2026',
+      title: 'Football 2026',
       debugShowCheckedModeBanner: false,
       theme: buildCyberTheme(),
       initialRoute: AppRoutes.splash,

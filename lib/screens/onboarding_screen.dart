@@ -183,7 +183,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             ],
           ),
           child: Text(
-            'WC 2026',
+            'FOOTBALL 2026',
             style: GoogleFonts.orbitron(
               fontSize: 52,
               fontWeight: FontWeight.w900,
