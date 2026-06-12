@@ -3,6 +3,31 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../data/mock_data.dart';
 
+// ─── IP Sanitization Utility ────────────────────────────────────────────────
+extension IpSanitizer on String {
+  String sanitizeIp() {
+    String text = this;
+    text = text.replaceAll(RegExp(r'FIFA\s*World\s*Cup', caseSensitive: false), 'International Tournament');
+    text = text.replaceAll(RegExp(r'World\s*Cup\s*2026', caseSensitive: false), 'Global Football 2026');
+    text = text.replaceAll(RegExp(r'World\s*Cup', caseSensitive: false), 'Global Football');
+    text = text.replaceAll(RegExp(r'WC\s*2026', caseSensitive: false), 'GF 2026');
+    text = text.replaceAll(RegExp(r'WC26', caseSensitive: false), 'GF26');
+    text = text.replaceAll(RegExp(r'FIFA', caseSensitive: false), 'Global');
+    return text;
+  }
+}
+
+dynamic sanitizeData(dynamic data) {
+  if (data is String) {
+    return data.sanitizeIp();
+  } else if (data is List) {
+    return data.map((item) => sanitizeData(item)).toList();
+  } else if (data is Map<String, dynamic>) {
+    return data.map((key, value) => MapEntry(key, sanitizeData(value)));
+  }
+  return data;
+}
+
 // ─── API Service – Cloudflare Worker Proxy ──────────────────────────────────
 class ApiService {
   // Buraya kendi Cloudflare Worker URL'ini koyacaksın
@@ -13,10 +38,10 @@ class ApiService {
 
   ApiService({http.Client? client}) : _client = client ?? http.Client();
 
-  // Tüm 2026 Dünya Kupası fikstürünü tek seferde çeker
+  // Tüm turnuva fikstürünü tek seferde çeker
   static Future<List<dynamic>> getAllFixtures() async {
     // API devredışı, mock data döndür
-    return MockData.fixtures;
+    return sanitizeData(MockData.fixtures) as List<dynamic>;
   }
 
   // ── Generic GET ───────────────────────────────────────────────────────────
@@ -35,7 +60,8 @@ class ApiService {
       ).timeout(_timeout);
 
       if (response.statusCode == 200) {
-        return json.decode(response.body) as Map<String, dynamic>;
+        final decoded = json.decode(response.body);
+        return sanitizeData(decoded) as Map<String, dynamic>;
       } else {
         throw ApiException(
           'HTTP ${response.statusCode}',
@@ -74,11 +100,7 @@ class ApiService {
     return _get('/fixtures', queryParams: {'live': 'all'});
   }
 
-  // ── Standings (Puan Durumu) ───────────────────────────────────────────────
-  Future<List<dynamic>> getStandings() async {
-    // API devredışı, mock data döndür
-    return MockData.standings;
-  }
+
 
   // ── Fixture Events (Maç Olayları) ─────────────────────────────────────────
   Future<Map<String, dynamic>> getFixtureEvents({

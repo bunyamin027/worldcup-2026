@@ -13,7 +13,7 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/") {
-      return new Response("World Cup 2026 Proxy Worker is running!", {
+      return new Response("Global Football Proxy Worker is running!", {
         status: 200,
         headers: {
           ...CORS_HEADERS,
@@ -22,11 +22,19 @@ export default {
       });
     }
 
+    // Ortak KV ve Cache referansı
+    const kvStorage = env.KV || env.CACHE;
+
+    // API KEY kontrolü
+    if (!env.API_KEY && (url.pathname === "/fixtures" || url.pathname === "/standings")) {
+      return new Response(JSON.stringify({ error: "Cloudflare Settings'te API_KEY tanımlanmamış!" }), {
+        status: 500,
+        headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
+      });
+    }
+
     if (url.pathname === "/fixtures") {
       const cacheKey = "wc_fixtures_2026_v2";
-      
-      // Hem KV hem de CACHE isimli binding'leri destekleyelim (hata almamak için)
-      const kvStorage = env.KV || env.CACHE;
       
       if (kvStorage) {
         try {
@@ -34,67 +42,25 @@ export default {
           if (cachedData) {
             return new Response(cachedData, {
               status: 200,
-              headers: {
-                ...CORS_HEADERS,
-                "Content-Type": "application/json",
-                "X-Cache": "HIT"
-              }
+              headers: { ...CORS_HEADERS, "Content-Type": "application/json", "X-Cache": "HIT" }
             });
           }
-        } catch (e) {
-          console.log("KV cache read error:", e);
-        }
+        } catch (e) { console.log(e); }
       }
 
-      // API KEY kontrolü
-      if (!env.API_KEY) {
-        return new Response(JSON.stringify({ error: "Cloudflare Settings'te API_KEY tanımlanmamış!" }), {
-          status: 500,
-          headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
-        });
-      }
-
-      const apiUrl = "https://api.football-data.org/v4/competitions/WC/matches";
-      
+      const apiUrl = "https://api.football-data.org/v4/competitions/2000/matches";
       try {
-        const apiResponse = await fetch(apiUrl, {
-          headers: {
-            "X-Auth-Token": env.API_KEY
-          }
-        });
-
-        if (!apiResponse.ok) {
-          return new Response(JSON.stringify({ error: "football-data.org request failed", status: apiResponse.status }), {
-            status: apiResponse.status,
-            headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
-          });
-        }
-
+        const apiResponse = await fetch(apiUrl, { headers: { "X-Auth-Token": env.API_KEY } });
+        if (!apiResponse.ok) throw new Error("API Request Failed: " + apiResponse.status);
         const data = await apiResponse.text();
-        
-        if (kvStorage) {
-          ctx.waitUntil(kvStorage.put(cacheKey, data, { expirationTtl: 43200 }).catch(e => console.log(e)));
-        }
-
-        return new Response(data, {
-          status: 200,
-          headers: {
-            ...CORS_HEADERS,
-            "Content-Type": "application/json",
-            "X-Cache": "MISS"
-          }
-        });
+        if (kvStorage) ctx.waitUntil(kvStorage.put(cacheKey, data, { expirationTtl: 43200 }).catch(e=>e));
+        return new Response(data, { status: 200, headers: { ...CORS_HEADERS, "Content-Type": "application/json", "X-Cache": "MISS" } });
       } catch (error) {
-        return new Response(JSON.stringify({ error: "Internal Server Error", details: error.message }), {
-          status: 500,
-          headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
-        });
+        return new Response(JSON.stringify({ error: "Internal Server Error", details: error.message }), { status: 500, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } });
       }
     }
 
-    return new Response("Not Found", { 
-      status: 404, 
-      headers: { ...CORS_HEADERS, "Content-Type": "text/plain" } 
-    });
+
+    return new Response("Not Found", { status: 404, headers: { ...CORS_HEADERS, "Content-Type": "text/plain" } });
   }
 };

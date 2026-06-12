@@ -912,12 +912,6 @@ export default {
       });
     }
 
-    if (url.pathname === "/standings") {
-      return new Response(JSON.stringify(MOCK_STANDINGS), {
-        status: 200,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
-      });
-    }
 
     return new Response("Not Found", { 
       status: 404, 

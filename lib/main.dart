@@ -81,18 +81,18 @@ void main() async {
   await initializeDateFormatting('tr_TR', null);
   runApp(
     const ProviderScope(
-      child: WorldCup2026App(),
+      child: GlobalFootballApp(),
     ),
   );
 }
 
-class WorldCup2026App extends StatelessWidget {
-  const WorldCup2026App({super.key});
+class GlobalFootballApp extends StatelessWidget {
+  const GlobalFootballApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Football 2026',
+      title: 'Global Football',
       debugShowCheckedModeBanner: false,
       theme: buildCyberTheme(),
       initialRoute: AppRoutes.splash,

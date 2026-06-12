@@ -94,3 +94,60 @@ with open('lib/data/mock_data.dart', 'w') as f:
     f.write(';\n}\n')
 
 print("Mock data generated in lib/data/mock_data.dart")
+
+with open('worker.js', 'w') as f:
+    f.write('''const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
+const MOCK_FIXTURES = {
+  "matches": ''')
+    f.write(json.dumps(api_fixtures, indent=2))
+    f.write('''
+};
+
+const MOCK_STANDINGS = {
+  "standings": ''')
+    f.write(json.dumps(api_standings, indent=2))
+    f.write('''
+};
+
+export default {
+  async fetch(request, env, ctx) {
+    if (request.method === "OPTIONS") {
+      return new Response(null, { headers: CORS_HEADERS });
+    }
+
+    const url = new URL(request.url);
+
+    if (url.pathname === "/") {
+      return new Response("World Cup 2026 Ultimate Mock API Worker is running!", {
+        status: 200,
+        headers: { ...CORS_HEADERS, "Content-Type": "text/plain" },
+      });
+    }
+
+    if (url.pathname === "/fixtures") {
+      return new Response(JSON.stringify(MOCK_FIXTURES), {
+        status: 200,
+        headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
+      });
+    }
+
+    if (url.pathname === "/standings") {
+      return new Response(JSON.stringify(MOCK_STANDINGS), {
+        status: 200,
+        headers: { ...CORS_HEADERS, "Content-Type": "application/json" }
+      });
+    }
+
+    return new Response("Not Found", { 
+      status: 404, 
+      headers: { ...CORS_HEADERS, "Content-Type": "text/plain" } 
+    });
+  }
+};
+''')
+print("Worker generated in worker.js")

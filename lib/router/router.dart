@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../main.dart';
 import '../screens/home_screen.dart';
-import '../screens/standings_screen.dart';
 import '../screens/match_detail_screen.dart';
 import '../screens/settings_screen.dart';
 
@@ -408,10 +407,6 @@ class _AppShellState extends State<AppShell> with SingleTickerProviderStateMixin
       label: 'MAÇLAR',
     ),
     _TabItem(
-      icon: Icons.leaderboard_rounded,
-      label: 'PUAN',
-    ),
-    _TabItem(
       icon: Icons.settings_rounded,
       label: 'AYARLAR',
     ),
@@ -420,7 +415,6 @@ class _AppShellState extends State<AppShell> with SingleTickerProviderStateMixin
   // Sayfalar – IndexedStack ile anlık geçiş; state korunur
   static const _pages = <Widget>[
     HomeScreen(),
-    StandingsScreen(),
     SettingsScreen(),
   ];
 

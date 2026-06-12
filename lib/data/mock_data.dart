@@ -1,519 +1,197 @@
 class MockData {
   static const List<dynamic> fixtures = [
   {
-    "id": 1001,
     "utcDate": "2026-06-11T19:00:00Z",
-    "status": "TIMED",
     "homeTeam": {
-      "name": "Kanada",
-      "shortName": "KAN"
+      "name": "Qatar",
+      "shortName": "QAT"
     },
     "awayTeam": {
-      "name": "Bosna-Hersek",
-      "shortName": "BOS"
+      "name": "Ecuador",
+      "shortName": "ECU"
     },
     "score": {
       "ft": [
         0,
-        0
-      ]
-    },
-    "group": "GROUP_B"
-  },
-  {
-    "id": 1000,
-    "utcDate": "2026-06-11T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Meksika",
-      "shortName": "MEK"
-    },
-    "awayTeam": {
-      "name": "Güney Afrika",
-      "shortName": "GÜN"
-    },
-    "score": {
-      "ft": [
+        2
+      ],
+      "ht": [
         0,
-        0
+        2
       ]
     },
     "group": "GROUP_A"
   },
   {
-    "id": 1002,
-    "utcDate": "2026-06-11T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Arjantin",
-      "shortName": "ARJ"
-    },
-    "awayTeam": {
-      "name": "Polonya",
-      "shortName": "POL"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_C"
-  },
-  {
-    "id": 1012,
-    "utcDate": "2026-06-12T05:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Güney Kore",
-      "shortName": "GÜN"
-    },
-    "awayTeam": {
-      "name": "Çekya",
-      "shortName": "ÇEK"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_A"
-  },
-  {
-    "id": 1003,
-    "utcDate": "2026-06-12T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "ABD",
-      "shortName": "ABD"
-    },
-    "awayTeam": {
-      "name": "Avustralya",
-      "shortName": "AVU"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_D"
-  },
-  {
-    "id": 1004,
     "utcDate": "2026-06-12T19:00:00Z",
-    "status": "TIMED",
     "homeTeam": {
-      "name": "İspanya",
-      "shortName": "İSP"
-    },
-    "awayTeam": {
-      "name": "Kosta Rika",
-      "shortName": "KOS"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_E"
-  },
-  {
-    "id": 1013,
-    "utcDate": "2026-06-12T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Katar",
-      "shortName": "KAT"
-    },
-    "awayTeam": {
-      "name": "İsviçre",
-      "shortName": "İSV"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_B"
-  },
-  {
-    "id": 1005,
-    "utcDate": "2026-06-12T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Belçika",
-      "shortName": "BEL"
-    },
-    "awayTeam": {
-      "name": "İsveç",
-      "shortName": "İSV"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_F"
-  },
-  {
-    "id": 1014,
-    "utcDate": "2026-06-12T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Mısır",
-      "shortName": "MIS"
-    },
-    "awayTeam": {
-      "name": "Yeni Zelanda",
-      "shortName": "YEN"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_C"
-  },
-  {
-    "id": 1006,
-    "utcDate": "2026-06-13T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Brezilya",
-      "shortName": "BRE"
-    },
-    "awayTeam": {
-      "name": "Sırbistan",
-      "shortName": "SIR"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_G"
-  },
-  {
-    "id": 1015,
-    "utcDate": "2026-06-13T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Paraguay",
-      "shortName": "PAR"
-    },
-    "awayTeam": {
-      "name": "Türkiye",
-      "shortName": "TÜR"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_D"
-  },
-  {
-    "id": 1007,
-    "utcDate": "2026-06-13T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Portekiz",
-      "shortName": "POR"
-    },
-    "awayTeam": {
-      "name": "Gana",
-      "shortName": "GAN"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_H"
-  },
-  {
-    "id": 1016,
-    "utcDate": "2026-06-13T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Almanya",
-      "shortName": "ALM"
-    },
-    "awayTeam": {
-      "name": "Japonya",
-      "shortName": "JAP"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_E"
-  },
-  {
-    "id": 1008,
-    "utcDate": "2026-06-13T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "İtalya",
-      "shortName": "İTA"
-    },
-    "awayTeam": {
-      "name": "Nijerya",
-      "shortName": "NIJ"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_I"
-  },
-  {
-    "id": 1017,
-    "utcDate": "2026-06-13T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Fas",
-      "shortName": "FAS"
-    },
-    "awayTeam": {
-      "name": "Hırvatistan",
-      "shortName": "HIR"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_F"
-  },
-  {
-    "id": 1009,
-    "utcDate": "2026-06-14T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Hollanda",
-      "shortName": "HOL"
-    },
-    "awayTeam": {
       "name": "Senegal",
       "shortName": "SEN"
     },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_J"
-  },
-  {
-    "id": 1018,
-    "utcDate": "2026-06-14T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "İskoçya",
-      "shortName": "İSK"
-    },
     "awayTeam": {
-      "name": "Kamerun",
-      "shortName": "KAM"
+      "name": "Netherlands",
+      "shortName": "NET"
     },
     "score": {
       "ft": [
         0,
-        0
-      ]
-    },
-    "group": "GROUP_G"
-  },
-  {
-    "id": 1010,
-    "utcDate": "2026-06-14T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Fransa",
-      "shortName": "FRA"
-    },
-    "awayTeam": {
-      "name": "Peru",
-      "shortName": "PER"
-    },
-    "score": {
-      "ft": [
+        2
+      ],
+      "ht": [
         0,
         0
       ]
     },
-    "group": "GROUP_K"
+    "group": "GROUP_A"
   },
   {
-    "id": 1019,
-    "utcDate": "2026-06-14T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Uruguay",
-      "shortName": "URU"
-    },
-    "awayTeam": {
-      "name": "Şili",
-      "shortName": "ŞIL"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_H"
-  },
-  {
-    "id": 1011,
-    "utcDate": "2026-06-14T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "İngiltere",
-      "shortName": "İNG"
-    },
-    "awayTeam": {
-      "name": "Mali",
-      "shortName": "MAL"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_L"
-  },
-  {
-    "id": 1020,
-    "utcDate": "2026-06-14T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Kolombiya",
-      "shortName": "KOL"
-    },
-    "awayTeam": {
-      "name": "Galler",
-      "shortName": "GAL"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_I"
-  },
-  {
-    "id": 1021,
-    "utcDate": "2026-06-15T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Ekvador",
-      "shortName": "EKV"
-    },
-    "awayTeam": {
-      "name": "Avusturya",
-      "shortName": "AVU"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_J"
-  },
-  {
-    "id": 1022,
-    "utcDate": "2026-06-15T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Danimarka",
-      "shortName": "DAN"
-    },
-    "awayTeam": {
-      "name": "Tunus",
-      "shortName": "TUN"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_K"
-  },
-  {
-    "id": 1023,
-    "utcDate": "2026-06-15T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Yunanistan",
-      "shortName": "YUN"
-    },
-    "awayTeam": {
-      "name": "Cezayir",
-      "shortName": "CEZ"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_L"
-  },
-  {
-    "id": 1024,
     "utcDate": "2026-06-16T16:00:00Z",
-    "status": "TIMED",
     "homeTeam": {
-      "name": "Meksika",
-      "shortName": "MEK"
+      "name": "Qatar",
+      "shortName": "QAT"
     },
     "awayTeam": {
-      "name": "Güney Kore",
-      "shortName": "GÜN"
+      "name": "Senegal",
+      "shortName": "SEN"
     },
     "score": {
       "ft": [
+        1,
+        3
+      ],
+      "ht": [
         0,
-        0
+        1
       ]
     },
     "group": "GROUP_A"
   },
   {
-    "id": 1025,
     "utcDate": "2026-06-16T19:00:00Z",
-    "status": "TIMED",
     "homeTeam": {
-      "name": "Kanada",
-      "shortName": "KAN"
+      "name": "Netherlands",
+      "shortName": "NET"
     },
     "awayTeam": {
-      "name": "Katar",
-      "shortName": "KAT"
+      "name": "Ecuador",
+      "shortName": "ECU"
     },
     "score": {
       "ft": [
+        1,
+        1
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "GROUP_A"
+  },
+  {
+    "utcDate": "2026-06-20T18:00:00Z",
+    "homeTeam": {
+      "name": "Ecuador",
+      "shortName": "ECU"
+    },
+    "awayTeam": {
+      "name": "Senegal",
+      "shortName": "SEN"
+    },
+    "score": {
+      "ft": [
+        1,
+        2
+      ],
+      "ht": [
+        0,
+        1
+      ]
+    },
+    "group": "GROUP_A"
+  },
+  {
+    "utcDate": "2026-06-20T18:00:00Z",
+    "homeTeam": {
+      "name": "Netherlands",
+      "shortName": "NET"
+    },
+    "awayTeam": {
+      "name": "Qatar",
+      "shortName": "QAT"
+    },
+    "score": {
+      "ft": [
+        2,
+        0
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "GROUP_A"
+  },
+  {
+    "utcDate": "2026-06-12T16:00:00Z",
+    "homeTeam": {
+      "name": "England",
+      "shortName": "ENG"
+    },
+    "awayTeam": {
+      "name": "Iran",
+      "shortName": "IRA"
+    },
+    "score": {
+      "ft": [
+        6,
+        2
+      ],
+      "ht": [
+        3,
+        0
+      ]
+    },
+    "group": "GROUP_B"
+  },
+  {
+    "utcDate": "2026-06-12T22:00:00Z",
+    "homeTeam": {
+      "name": "USA",
+      "shortName": "USA"
+    },
+    "awayTeam": {
+      "name": "Wales",
+      "shortName": "WAL"
+    },
+    "score": {
+      "ft": [
+        1,
+        1
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "GROUP_B"
+  },
+  {
+    "utcDate": "2026-06-16T13:00:00Z",
+    "homeTeam": {
+      "name": "Wales",
+      "shortName": "WAL"
+    },
+    "awayTeam": {
+      "name": "Iran",
+      "shortName": "IRA"
+    },
+    "score": {
+      "ft": [
+        0,
+        2
+      ],
+      "ht": [
         0,
         0
       ]
@@ -521,96 +199,14 @@ class MockData {
     "group": "GROUP_B"
   },
   {
-    "id": 1026,
     "utcDate": "2026-06-16T22:00:00Z",
-    "status": "TIMED",
     "homeTeam": {
-      "name": "Arjantin",
-      "shortName": "ARJ"
+      "name": "England",
+      "shortName": "ENG"
     },
     "awayTeam": {
-      "name": "Mısır",
-      "shortName": "MIS"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_C"
-  },
-  {
-    "id": 1027,
-    "utcDate": "2026-06-17T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "ABD",
-      "shortName": "ABD"
-    },
-    "awayTeam": {
-      "name": "Paraguay",
-      "shortName": "PAR"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_D"
-  },
-  {
-    "id": 1036,
-    "utcDate": "2026-06-17T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Güney Afrika",
-      "shortName": "GÜN"
-    },
-    "awayTeam": {
-      "name": "Çekya",
-      "shortName": "ÇEK"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_A"
-  },
-  {
-    "id": 1028,
-    "utcDate": "2026-06-17T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "İspanya",
-      "shortName": "İSP"
-    },
-    "awayTeam": {
-      "name": "Almanya",
-      "shortName": "ALM"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_E"
-  },
-  {
-    "id": 1037,
-    "utcDate": "2026-06-17T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Bosna-Hersek",
-      "shortName": "BOS"
-    },
-    "awayTeam": {
-      "name": "İsviçre",
-      "shortName": "İSV"
+      "name": "USA",
+      "shortName": "USA"
     },
     "score": {
       "ft": [
@@ -621,379 +217,21 @@ class MockData {
     "group": "GROUP_B"
   },
   {
-    "id": 1029,
-    "utcDate": "2026-06-17T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Belçika",
-      "shortName": "BEL"
-    },
-    "awayTeam": {
-      "name": "Fas",
-      "shortName": "FAS"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_F"
-  },
-  {
-    "id": 1038,
-    "utcDate": "2026-06-17T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Polonya",
-      "shortName": "POL"
-    },
-    "awayTeam": {
-      "name": "Yeni Zelanda",
-      "shortName": "YEN"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_C"
-  },
-  {
-    "id": 1030,
-    "utcDate": "2026-06-18T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Brezilya",
-      "shortName": "BRE"
-    },
-    "awayTeam": {
-      "name": "İskoçya",
-      "shortName": "İSK"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_G"
-  },
-  {
-    "id": 1039,
-    "utcDate": "2026-06-18T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Avustralya",
-      "shortName": "AVU"
-    },
-    "awayTeam": {
-      "name": "Türkiye",
-      "shortName": "TÜR"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_D"
-  },
-  {
-    "id": 1031,
-    "utcDate": "2026-06-18T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Portekiz",
-      "shortName": "POR"
-    },
-    "awayTeam": {
-      "name": "Uruguay",
-      "shortName": "URU"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_H"
-  },
-  {
-    "id": 1040,
-    "utcDate": "2026-06-18T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Kosta Rika",
-      "shortName": "KOS"
-    },
-    "awayTeam": {
-      "name": "Japonya",
-      "shortName": "JAP"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_E"
-  },
-  {
-    "id": 1032,
-    "utcDate": "2026-06-18T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "İtalya",
-      "shortName": "İTA"
-    },
-    "awayTeam": {
-      "name": "Kolombiya",
-      "shortName": "KOL"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_I"
-  },
-  {
-    "id": 1041,
-    "utcDate": "2026-06-18T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "İsveç",
-      "shortName": "İSV"
-    },
-    "awayTeam": {
-      "name": "Hırvatistan",
-      "shortName": "HIR"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_F"
-  },
-  {
-    "id": 1033,
-    "utcDate": "2026-06-19T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Hollanda",
-      "shortName": "HOL"
-    },
-    "awayTeam": {
-      "name": "Ekvador",
-      "shortName": "EKV"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_J"
-  },
-  {
-    "id": 1042,
-    "utcDate": "2026-06-19T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Sırbistan",
-      "shortName": "SIR"
-    },
-    "awayTeam": {
-      "name": "Kamerun",
-      "shortName": "KAM"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_G"
-  },
-  {
-    "id": 1034,
-    "utcDate": "2026-06-19T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Fransa",
-      "shortName": "FRA"
-    },
-    "awayTeam": {
-      "name": "Danimarka",
-      "shortName": "DAN"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_K"
-  },
-  {
-    "id": 1043,
-    "utcDate": "2026-06-19T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Gana",
-      "shortName": "GAN"
-    },
-    "awayTeam": {
-      "name": "Şili",
-      "shortName": "ŞIL"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_H"
-  },
-  {
-    "id": 1035,
-    "utcDate": "2026-06-19T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "İngiltere",
-      "shortName": "İNG"
-    },
-    "awayTeam": {
-      "name": "Yunanistan",
-      "shortName": "YUN"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_L"
-  },
-  {
-    "id": 1044,
-    "utcDate": "2026-06-19T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Nijerya",
-      "shortName": "NIJ"
-    },
-    "awayTeam": {
-      "name": "Galler",
-      "shortName": "GAL"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_I"
-  },
-  {
-    "id": 1045,
-    "utcDate": "2026-06-20T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Senegal",
-      "shortName": "SEN"
-    },
-    "awayTeam": {
-      "name": "Avusturya",
-      "shortName": "AVU"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_J"
-  },
-  {
-    "id": 1046,
-    "utcDate": "2026-06-20T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Peru",
-      "shortName": "PER"
-    },
-    "awayTeam": {
-      "name": "Tunus",
-      "shortName": "TUN"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_K"
-  },
-  {
-    "id": 1047,
     "utcDate": "2026-06-20T22:00:00Z",
-    "status": "TIMED",
     "homeTeam": {
-      "name": "Mali",
-      "shortName": "MAL"
+      "name": "Wales",
+      "shortName": "WAL"
     },
     "awayTeam": {
-      "name": "Cezayir",
-      "shortName": "CEZ"
+      "name": "England",
+      "shortName": "ENG"
     },
     "score": {
       "ft": [
         0,
-        0
-      ]
-    },
-    "group": "GROUP_L"
-  },
-  {
-    "id": 1048,
-    "utcDate": "2026-06-21T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Meksika",
-      "shortName": "MEK"
-    },
-    "awayTeam": {
-      "name": "Çekya",
-      "shortName": "ÇEK"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_A"
-  },
-  {
-    "id": 1049,
-    "utcDate": "2026-06-21T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Kanada",
-      "shortName": "KAN"
-    },
-    "awayTeam": {
-      "name": "İsviçre",
-      "shortName": "İSV"
-    },
-    "score": {
-      "ft": [
+        3
+      ],
+      "ht": [
         0,
         0
       ]
@@ -1001,16 +239,58 @@ class MockData {
     "group": "GROUP_B"
   },
   {
-    "id": 1050,
-    "utcDate": "2026-06-21T22:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-20T22:00:00Z",
     "homeTeam": {
-      "name": "Arjantin",
-      "shortName": "ARJ"
+      "name": "Iran",
+      "shortName": "IRA"
     },
     "awayTeam": {
-      "name": "Yeni Zelanda",
-      "shortName": "YEN"
+      "name": "USA",
+      "shortName": "USA"
+    },
+    "score": {
+      "ft": [
+        0,
+        1
+      ],
+      "ht": [
+        0,
+        1
+      ]
+    },
+    "group": "GROUP_B"
+  },
+  {
+    "utcDate": "2026-06-13T13:00:00Z",
+    "homeTeam": {
+      "name": "Argentina",
+      "shortName": "ARG"
+    },
+    "awayTeam": {
+      "name": "Saudi Arabia",
+      "shortName": "SAU"
+    },
+    "score": {
+      "ft": [
+        1,
+        2
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "GROUP_C"
+  },
+  {
+    "utcDate": "2026-06-13T19:00:00Z",
+    "homeTeam": {
+      "name": "Mexico",
+      "shortName": "MEX"
+    },
+    "awayTeam": {
+      "name": "Poland",
+      "shortName": "POL"
     },
     "score": {
       "ft": [
@@ -1021,119 +301,43 @@ class MockData {
     "group": "GROUP_C"
   },
   {
-    "id": 1051,
-    "utcDate": "2026-06-22T16:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-17T16:00:00Z",
     "homeTeam": {
-      "name": "ABD",
-      "shortName": "ABD"
-    },
-    "awayTeam": {
-      "name": "Türkiye",
-      "shortName": "TÜR"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_D"
-  },
-  {
-    "id": 1060,
-    "utcDate": "2026-06-22T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Güney Afrika",
-      "shortName": "GÜN"
-    },
-    "awayTeam": {
-      "name": "Güney Kore",
-      "shortName": "GÜN"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_A"
-  },
-  {
-    "id": 1052,
-    "utcDate": "2026-06-22T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "İspanya",
-      "shortName": "İSP"
-    },
-    "awayTeam": {
-      "name": "Japonya",
-      "shortName": "JAP"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_E"
-  },
-  {
-    "id": 1061,
-    "utcDate": "2026-06-22T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Bosna-Hersek",
-      "shortName": "BOS"
-    },
-    "awayTeam": {
-      "name": "Katar",
-      "shortName": "KAT"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_B"
-  },
-  {
-    "id": 1053,
-    "utcDate": "2026-06-22T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Belçika",
-      "shortName": "BEL"
-    },
-    "awayTeam": {
-      "name": "Hırvatistan",
-      "shortName": "HIR"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_F"
-  },
-  {
-    "id": 1062,
-    "utcDate": "2026-06-22T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Polonya",
+      "name": "Poland",
       "shortName": "POL"
     },
     "awayTeam": {
-      "name": "Mısır",
-      "shortName": "MIS"
+      "name": "Saudi Arabia",
+      "shortName": "SAU"
     },
     "score": {
       "ft": [
+        2,
+        0
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "GROUP_C"
+  },
+  {
+    "utcDate": "2026-06-17T22:00:00Z",
+    "homeTeam": {
+      "name": "Argentina",
+      "shortName": "ARG"
+    },
+    "awayTeam": {
+      "name": "Mexico",
+      "shortName": "MEX"
+    },
+    "score": {
+      "ft": [
+        2,
+        0
+      ],
+      "ht": [
         0,
         0
       ]
@@ -1141,175 +345,57 @@ class MockData {
     "group": "GROUP_C"
   },
   {
-    "id": 1054,
-    "utcDate": "2026-06-23T16:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-21T22:00:00Z",
     "homeTeam": {
-      "name": "Brezilya",
-      "shortName": "BRE"
+      "name": "Poland",
+      "shortName": "POL"
     },
     "awayTeam": {
-      "name": "Kamerun",
-      "shortName": "KAM"
+      "name": "Argentina",
+      "shortName": "ARG"
     },
     "score": {
       "ft": [
         0,
-        0
-      ]
-    },
-    "group": "GROUP_G"
-  },
-  {
-    "id": 1063,
-    "utcDate": "2026-06-23T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Avustralya",
-      "shortName": "AVU"
-    },
-    "awayTeam": {
-      "name": "Paraguay",
-      "shortName": "PAR"
-    },
-    "score": {
-      "ft": [
+        2
+      ],
+      "ht": [
         0,
         0
       ]
     },
-    "group": "GROUP_D"
+    "group": "GROUP_C"
   },
   {
-    "id": 1055,
-    "utcDate": "2026-06-23T19:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-21T22:00:00Z",
     "homeTeam": {
-      "name": "Portekiz",
-      "shortName": "POR"
+      "name": "Saudi Arabia",
+      "shortName": "SAU"
     },
     "awayTeam": {
-      "name": "Şili",
-      "shortName": "ŞIL"
+      "name": "Mexico",
+      "shortName": "MEX"
     },
     "score": {
       "ft": [
+        1,
+        2
+      ],
+      "ht": [
         0,
         0
       ]
     },
-    "group": "GROUP_H"
+    "group": "GROUP_C"
   },
   {
-    "id": 1064,
-    "utcDate": "2026-06-23T19:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-13T16:00:00Z",
     "homeTeam": {
-      "name": "Kosta Rika",
-      "shortName": "KOS"
+      "name": "Denmark",
+      "shortName": "DEN"
     },
     "awayTeam": {
-      "name": "Almanya",
-      "shortName": "ALM"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_E"
-  },
-  {
-    "id": 1056,
-    "utcDate": "2026-06-23T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "İtalya",
-      "shortName": "İTA"
-    },
-    "awayTeam": {
-      "name": "Galler",
-      "shortName": "GAL"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_I"
-  },
-  {
-    "id": 1065,
-    "utcDate": "2026-06-23T22:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "İsveç",
-      "shortName": "İSV"
-    },
-    "awayTeam": {
-      "name": "Fas",
-      "shortName": "FAS"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_F"
-  },
-  {
-    "id": 1057,
-    "utcDate": "2026-06-24T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Hollanda",
-      "shortName": "HOL"
-    },
-    "awayTeam": {
-      "name": "Avusturya",
-      "shortName": "AVU"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_J"
-  },
-  {
-    "id": 1066,
-    "utcDate": "2026-06-24T16:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Sırbistan",
-      "shortName": "SIR"
-    },
-    "awayTeam": {
-      "name": "İskoçya",
-      "shortName": "İSK"
-    },
-    "score": {
-      "ft": [
-        0,
-        0
-      ]
-    },
-    "group": "GROUP_G"
-  },
-  {
-    "id": 1058,
-    "utcDate": "2026-06-24T19:00:00Z",
-    "status": "TIMED",
-    "homeTeam": {
-      "name": "Fransa",
-      "shortName": "FRA"
-    },
-    "awayTeam": {
-      "name": "Tunus",
+      "name": "Tunisia",
       "shortName": "TUN"
     },
     "score": {
@@ -1318,19 +404,515 @@ class MockData {
         0
       ]
     },
-    "group": "GROUP_K"
+    "group": "GROUP_D"
   },
   {
-    "id": 1067,
-    "utcDate": "2026-06-24T19:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-13T22:00:00Z",
     "homeTeam": {
-      "name": "Gana",
-      "shortName": "GAN"
+      "name": "France",
+      "shortName": "FRA"
     },
     "awayTeam": {
+      "name": "Australia",
+      "shortName": "AUS"
+    },
+    "score": {
+      "ft": [
+        4,
+        1
+      ],
+      "ht": [
+        2,
+        1
+      ]
+    },
+    "group": "GROUP_D"
+  },
+  {
+    "utcDate": "2026-06-17T13:00:00Z",
+    "homeTeam": {
+      "name": "Tunisia",
+      "shortName": "TUN"
+    },
+    "awayTeam": {
+      "name": "Australia",
+      "shortName": "AUS"
+    },
+    "score": {
+      "ft": [
+        0,
+        1
+      ],
+      "ht": [
+        0,
+        1
+      ]
+    },
+    "group": "GROUP_D"
+  },
+  {
+    "utcDate": "2026-06-17T19:00:00Z",
+    "homeTeam": {
+      "name": "France",
+      "shortName": "FRA"
+    },
+    "awayTeam": {
+      "name": "Denmark",
+      "shortName": "DEN"
+    },
+    "score": {
+      "ft": [
+        2,
+        1
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_D"
+  },
+  {
+    "utcDate": "2026-06-21T18:00:00Z",
+    "homeTeam": {
+      "name": "Australia",
+      "shortName": "AUS"
+    },
+    "awayTeam": {
+      "name": "Denmark",
+      "shortName": "DEN"
+    },
+    "score": {
+      "ft": [
+        1,
+        0
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_D"
+  },
+  {
+    "utcDate": "2026-06-21T18:00:00Z",
+    "homeTeam": {
+      "name": "Tunisia",
+      "shortName": "TUN"
+    },
+    "awayTeam": {
+      "name": "France",
+      "shortName": "FRA"
+    },
+    "score": {
+      "ft": [
+        1,
+        0
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_D"
+  },
+  {
+    "utcDate": "2026-06-14T16:00:00Z",
+    "homeTeam": {
+      "name": "Germany",
+      "shortName": "GER"
+    },
+    "awayTeam": {
+      "name": "Japan",
+      "shortName": "JAP"
+    },
+    "score": {
+      "ft": [
+        1,
+        2
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "GROUP_E"
+  },
+  {
+    "utcDate": "2026-06-14T19:00:00Z",
+    "homeTeam": {
+      "name": "Spain",
+      "shortName": "SPA"
+    },
+    "awayTeam": {
+      "name": "Costa Rica",
+      "shortName": "COS"
+    },
+    "score": {
+      "ft": [
+        7,
+        0
+      ],
+      "ht": [
+        3,
+        0
+      ]
+    },
+    "group": "GROUP_E"
+  },
+  {
+    "utcDate": "2026-06-18T13:00:00Z",
+    "homeTeam": {
+      "name": "Japan",
+      "shortName": "JAP"
+    },
+    "awayTeam": {
+      "name": "Costa Rica",
+      "shortName": "COS"
+    },
+    "score": {
+      "ft": [
+        0,
+        1
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_E"
+  },
+  {
+    "utcDate": "2026-06-18T22:00:00Z",
+    "homeTeam": {
+      "name": "Spain",
+      "shortName": "SPA"
+    },
+    "awayTeam": {
+      "name": "Germany",
+      "shortName": "GER"
+    },
+    "score": {
+      "ft": [
+        1,
+        1
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_E"
+  },
+  {
+    "utcDate": "2026-06-22T22:00:00Z",
+    "homeTeam": {
+      "name": "Japan",
+      "shortName": "JAP"
+    },
+    "awayTeam": {
+      "name": "Spain",
+      "shortName": "SPA"
+    },
+    "score": {
+      "ft": [
+        2,
+        1
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_E"
+  },
+  {
+    "utcDate": "2026-06-22T22:00:00Z",
+    "homeTeam": {
+      "name": "Costa Rica",
+      "shortName": "COS"
+    },
+    "awayTeam": {
+      "name": "Germany",
+      "shortName": "GER"
+    },
+    "score": {
+      "ft": [
+        2,
+        4
+      ],
+      "ht": [
+        0,
+        1
+      ]
+    },
+    "group": "GROUP_E"
+  },
+  {
+    "utcDate": "2026-06-14T13:00:00Z",
+    "homeTeam": {
+      "name": "Morocco",
+      "shortName": "MOR"
+    },
+    "awayTeam": {
+      "name": "Croatia",
+      "shortName": "CRO"
+    },
+    "score": {
+      "ft": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_F"
+  },
+  {
+    "utcDate": "2026-06-14T22:00:00Z",
+    "homeTeam": {
+      "name": "Belgium",
+      "shortName": "BEL"
+    },
+    "awayTeam": {
+      "name": "Canada",
+      "shortName": "CAN"
+    },
+    "score": {
+      "ft": [
+        1,
+        0
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "GROUP_F"
+  },
+  {
+    "utcDate": "2026-06-18T16:00:00Z",
+    "homeTeam": {
+      "name": "Belgium",
+      "shortName": "BEL"
+    },
+    "awayTeam": {
+      "name": "Morocco",
+      "shortName": "MOR"
+    },
+    "score": {
+      "ft": [
+        0,
+        2
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_F"
+  },
+  {
+    "utcDate": "2026-06-18T19:00:00Z",
+    "homeTeam": {
+      "name": "Croatia",
+      "shortName": "CRO"
+    },
+    "awayTeam": {
+      "name": "Canada",
+      "shortName": "CAN"
+    },
+    "score": {
+      "ft": [
+        4,
+        1
+      ],
+      "ht": [
+        2,
+        1
+      ]
+    },
+    "group": "GROUP_F"
+  },
+  {
+    "utcDate": "2026-06-22T18:00:00Z",
+    "homeTeam": {
+      "name": "Croatia",
+      "shortName": "CRO"
+    },
+    "awayTeam": {
+      "name": "Belgium",
+      "shortName": "BEL"
+    },
+    "score": {
+      "ft": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_F"
+  },
+  {
+    "utcDate": "2026-06-22T18:00:00Z",
+    "homeTeam": {
+      "name": "Canada",
+      "shortName": "CAN"
+    },
+    "awayTeam": {
+      "name": "Morocco",
+      "shortName": "MOR"
+    },
+    "score": {
+      "ft": [
+        1,
+        2
+      ],
+      "ht": [
+        1,
+        2
+      ]
+    },
+    "group": "GROUP_F"
+  },
+  {
+    "utcDate": "2026-06-15T13:00:00Z",
+    "homeTeam": {
+      "name": "Switzerland",
+      "shortName": "SWI"
+    },
+    "awayTeam": {
+      "name": "Cameroon",
+      "shortName": "CAM"
+    },
+    "score": {
+      "ft": [
+        1,
+        0
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_G"
+  },
+  {
+    "utcDate": "2026-06-15T22:00:00Z",
+    "homeTeam": {
+      "name": "Brazil",
+      "shortName": "BRA"
+    },
+    "awayTeam": {
+      "name": "Serbia",
+      "shortName": "SER"
+    },
+    "score": {
+      "ft": [
+        2,
+        0
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_G"
+  },
+  {
+    "utcDate": "2026-06-19T13:00:00Z",
+    "homeTeam": {
+      "name": "Cameroon",
+      "shortName": "CAM"
+    },
+    "awayTeam": {
+      "name": "Serbia",
+      "shortName": "SER"
+    },
+    "score": {
+      "ft": [
+        3,
+        3
+      ],
+      "ht": [
+        1,
+        2
+      ]
+    },
+    "group": "GROUP_G"
+  },
+  {
+    "utcDate": "2026-06-19T19:00:00Z",
+    "homeTeam": {
+      "name": "Brazil",
+      "shortName": "BRA"
+    },
+    "awayTeam": {
+      "name": "Switzerland",
+      "shortName": "SWI"
+    },
+    "score": {
+      "ft": [
+        1,
+        0
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_G"
+  },
+  {
+    "utcDate": "2026-06-23T22:00:00Z",
+    "homeTeam": {
+      "name": "Serbia",
+      "shortName": "SER"
+    },
+    "awayTeam": {
+      "name": "Switzerland",
+      "shortName": "SWI"
+    },
+    "score": {
+      "ft": [
+        2,
+        3
+      ],
+      "ht": [
+        2,
+        1
+      ]
+    },
+    "group": "GROUP_G"
+  },
+  {
+    "utcDate": "2026-06-23T22:00:00Z",
+    "homeTeam": {
+      "name": "Cameroon",
+      "shortName": "CAM"
+    },
+    "awayTeam": {
+      "name": "Brazil",
+      "shortName": "BRA"
+    },
+    "score": {
+      "ft": [
+        1,
+        0
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "GROUP_G"
+  },
+  {
+    "utcDate": "2026-06-15T16:00:00Z",
+    "homeTeam": {
       "name": "Uruguay",
       "shortName": "URU"
+    },
+    "awayTeam": {
+      "name": "South Korea",
+      "shortName": "SOU"
     },
     "score": {
       "ft": [
@@ -1341,104 +923,502 @@ class MockData {
     "group": "GROUP_H"
   },
   {
-    "id": 1059,
-    "utcDate": "2026-06-24T22:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-15T19:00:00Z",
     "homeTeam": {
-      "name": "İngiltere",
-      "shortName": "İNG"
+      "name": "Portugal",
+      "shortName": "POR"
     },
     "awayTeam": {
-      "name": "Cezayir",
-      "shortName": "CEZ"
+      "name": "Ghana",
+      "shortName": "GHA"
     },
     "score": {
       "ft": [
+        3,
+        2
+      ],
+      "ht": [
         0,
         0
       ]
     },
-    "group": "GROUP_L"
+    "group": "GROUP_H"
   },
   {
-    "id": 1068,
-    "utcDate": "2026-06-24T22:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-19T16:00:00Z",
     "homeTeam": {
-      "name": "Nijerya",
-      "shortName": "NIJ"
+      "name": "South Korea",
+      "shortName": "SOU"
     },
     "awayTeam": {
-      "name": "Kolombiya",
-      "shortName": "KOL"
+      "name": "Ghana",
+      "shortName": "GHA"
     },
     "score": {
       "ft": [
+        2,
+        3
+      ],
+      "ht": [
+        0,
+        2
+      ]
+    },
+    "group": "GROUP_H"
+  },
+  {
+    "utcDate": "2026-06-19T22:00:00Z",
+    "homeTeam": {
+      "name": "Portugal",
+      "shortName": "POR"
+    },
+    "awayTeam": {
+      "name": "Uruguay",
+      "shortName": "URU"
+    },
+    "score": {
+      "ft": [
+        2,
+        0
+      ],
+      "ht": [
         0,
         0
       ]
     },
-    "group": "GROUP_I"
+    "group": "GROUP_H"
   },
   {
-    "id": 1069,
-    "utcDate": "2026-06-25T16:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-23T18:00:00Z",
     "homeTeam": {
+      "name": "Ghana",
+      "shortName": "GHA"
+    },
+    "awayTeam": {
+      "name": "Uruguay",
+      "shortName": "URU"
+    },
+    "score": {
+      "ft": [
+        0,
+        2
+      ]
+    },
+    "group": "GROUP_H"
+  },
+  {
+    "utcDate": "2026-06-23T18:00:00Z",
+    "homeTeam": {
+      "name": "South Korea",
+      "shortName": "SOU"
+    },
+    "awayTeam": {
+      "name": "Portugal",
+      "shortName": "POR"
+    },
+    "score": {
+      "ft": [
+        2,
+        1
+      ],
+      "ht": [
+        1,
+        1
+      ]
+    },
+    "group": "GROUP_H"
+  },
+  {
+    "utcDate": "2026-06-24T18:00:00Z",
+    "homeTeam": {
+      "name": "Netherlands",
+      "shortName": "NET"
+    },
+    "awayTeam": {
+      "name": "USA",
+      "shortName": "USA"
+    },
+    "score": {
+      "ft": [
+        3,
+        1
+      ],
+      "ht": [
+        2,
+        0
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-06-24T22:00:00Z",
+    "homeTeam": {
+      "name": "Argentina",
+      "shortName": "ARG"
+    },
+    "awayTeam": {
+      "name": "Australia",
+      "shortName": "AUS"
+    },
+    "score": {
+      "ft": [
+        2,
+        1
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-06-25T18:00:00Z",
+    "homeTeam": {
+      "name": "France",
+      "shortName": "FRA"
+    },
+    "awayTeam": {
+      "name": "Poland",
+      "shortName": "POL"
+    },
+    "score": {
+      "ft": [
+        3,
+        1
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-06-25T22:00:00Z",
+    "homeTeam": {
+      "name": "England",
+      "shortName": "ENG"
+    },
+    "awayTeam": {
       "name": "Senegal",
       "shortName": "SEN"
     },
-    "awayTeam": {
-      "name": "Ekvador",
-      "shortName": "EKV"
-    },
     "score": {
       "ft": [
-        0,
+        3,
+        0
+      ],
+      "ht": [
+        2,
         0
       ]
     },
-    "group": "GROUP_J"
+    "group": "Knockout"
   },
   {
-    "id": 1070,
-    "utcDate": "2026-06-25T19:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-26T18:00:00Z",
     "homeTeam": {
-      "name": "Peru",
-      "shortName": "PER"
+      "name": "Japan",
+      "shortName": "JAP"
     },
     "awayTeam": {
-      "name": "Danimarka",
-      "shortName": "DAN"
+      "name": "Croatia",
+      "shortName": "CRO"
     },
     "score": {
+      "p": [
+        1,
+        3
+      ],
+      "et": [
+        1,
+        1
+      ],
       "ft": [
-        0,
+        1,
+        1
+      ],
+      "ht": [
+        1,
         0
       ]
     },
-    "group": "GROUP_K"
+    "group": "Knockout"
   },
   {
-    "id": 1071,
-    "utcDate": "2026-06-25T22:00:00Z",
-    "status": "TIMED",
+    "utcDate": "2026-06-26T22:00:00Z",
     "homeTeam": {
-      "name": "Mali",
-      "shortName": "MAL"
+      "name": "Brazil",
+      "shortName": "BRA"
     },
     "awayTeam": {
-      "name": "Yunanistan",
-      "shortName": "YUN"
+      "name": "South Korea",
+      "shortName": "SOU"
     },
     "score": {
       "ft": [
+        4,
+        1
+      ],
+      "ht": [
+        4,
+        0
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-06-27T18:00:00Z",
+    "homeTeam": {
+      "name": "Morocco",
+      "shortName": "MOR"
+    },
+    "awayTeam": {
+      "name": "Spain",
+      "shortName": "SPA"
+    },
+    "score": {
+      "p": [
+        3,
+        0
+      ],
+      "et": [
+        0,
+        0
+      ],
+      "ft": [
+        0,
+        0
+      ],
+      "ht": [
         0,
         0
       ]
     },
-    "group": "GROUP_L"
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-06-27T22:00:00Z",
+    "homeTeam": {
+      "name": "Portugal",
+      "shortName": "POR"
+    },
+    "awayTeam": {
+      "name": "Switzerland",
+      "shortName": "SWI"
+    },
+    "score": {
+      "ft": [
+        6,
+        1
+      ],
+      "ht": [
+        2,
+        0
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-06-30T18:00:00Z",
+    "homeTeam": {
+      "name": "Croatia",
+      "shortName": "CRO"
+    },
+    "awayTeam": {
+      "name": "Brazil",
+      "shortName": "BRA"
+    },
+    "score": {
+      "p": [
+        4,
+        2
+      ],
+      "et": [
+        1,
+        1
+      ],
+      "ft": [
+        0,
+        0
+      ],
+      "ht": [
+        0,
+        0
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-06-30T22:00:00Z",
+    "homeTeam": {
+      "name": "Netherlands",
+      "shortName": "NET"
+    },
+    "awayTeam": {
+      "name": "Argentina",
+      "shortName": "ARG"
+    },
+    "score": {
+      "p": [
+        3,
+        4
+      ],
+      "et": [
+        2,
+        2
+      ],
+      "ft": [
+        2,
+        2
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-07-01T18:00:00Z",
+    "homeTeam": {
+      "name": "Morocco",
+      "shortName": "MOR"
+    },
+    "awayTeam": {
+      "name": "Portugal",
+      "shortName": "POR"
+    },
+    "score": {
+      "ft": [
+        1,
+        0
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-07-01T22:00:00Z",
+    "homeTeam": {
+      "name": "England",
+      "shortName": "ENG"
+    },
+    "awayTeam": {
+      "name": "France",
+      "shortName": "FRA"
+    },
+    "score": {
+      "ft": [
+        1,
+        2
+      ],
+      "ht": [
+        0,
+        1
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-07-04T22:00:00Z",
+    "homeTeam": {
+      "name": "Argentina",
+      "shortName": "ARG"
+    },
+    "awayTeam": {
+      "name": "Croatia",
+      "shortName": "CRO"
+    },
+    "score": {
+      "ft": [
+        3,
+        0
+      ],
+      "ht": [
+        2,
+        0
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-07-05T22:00:00Z",
+    "homeTeam": {
+      "name": "France",
+      "shortName": "FRA"
+    },
+    "awayTeam": {
+      "name": "Morocco",
+      "shortName": "MOR"
+    },
+    "score": {
+      "ft": [
+        2,
+        0
+      ],
+      "ht": [
+        1,
+        0
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-07-08T18:00:00Z",
+    "homeTeam": {
+      "name": "Croatia",
+      "shortName": "CRO"
+    },
+    "awayTeam": {
+      "name": "Morocco",
+      "shortName": "MOR"
+    },
+    "score": {
+      "ft": [
+        2,
+        1
+      ],
+      "ht": [
+        2,
+        1
+      ]
+    },
+    "group": "Knockout"
+  },
+  {
+    "utcDate": "2026-07-09T18:00:00Z",
+    "homeTeam": {
+      "name": "Argentina",
+      "shortName": "ARG"
+    },
+    "awayTeam": {
+      "name": "France",
+      "shortName": "FRA"
+    },
+    "score": {
+      "p": [
+        4,
+        2
+      ],
+      "et": [
+        3,
+        3
+      ],
+      "ft": [
+        2,
+        2
+      ],
+      "ht": [
+        2,
+        0
+      ]
+    },
+    "group": "Knockout"
   }
 ];
 
@@ -1449,62 +1429,62 @@ class MockData {
     "table": [
       {
         "team": {
-          "name": "Meksika",
-          "shortName": "MEK"
+          "name": "Netherlands",
+          "shortName": "NET"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
+        "points": 7,
+        "playedGames": 3,
+        "won": 2,
+        "draw": 1,
         "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "goalsFor": 5,
+        "goalsAgainst": 1,
+        "goalDifference": 4,
         "position": 1
       },
       {
         "team": {
-          "name": "Güney Afrika",
-          "shortName": "GÜN"
+          "name": "Senegal",
+          "shortName": "SEN"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 6,
+        "playedGames": 3,
+        "won": 2,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 1,
+        "goalsFor": 5,
+        "goalsAgainst": 4,
+        "goalDifference": 1,
         "position": 2
       },
       {
         "team": {
-          "name": "Güney Kore",
-          "shortName": "GÜN"
+          "name": "Ecuador",
+          "shortName": "ECU"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "points": 4,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "goalsFor": 4,
+        "goalsAgainst": 3,
+        "goalDifference": 1,
         "position": 3
       },
       {
         "team": {
-          "name": "Çekya",
-          "shortName": "ÇEK"
+          "name": "Qatar",
+          "shortName": "QAT"
         },
         "points": 0,
-        "playedGames": 0,
+        "playedGames": 3,
         "won": 0,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 3,
+        "goalsFor": 1,
+        "goalsAgainst": 7,
+        "goalDifference": -6,
         "position": 4
       }
     ]
@@ -1515,62 +1495,62 @@ class MockData {
     "table": [
       {
         "team": {
-          "name": "Kanada",
-          "shortName": "KAN"
+          "name": "England",
+          "shortName": "ENG"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
+        "points": 7,
+        "playedGames": 3,
+        "won": 2,
+        "draw": 1,
         "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "goalsFor": 9,
+        "goalsAgainst": 2,
+        "goalDifference": 7,
         "position": 1
       },
       {
         "team": {
-          "name": "Bosna-Hersek",
-          "shortName": "BOS"
+          "name": "USA",
+          "shortName": "USA"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
+        "points": 5,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 2,
         "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "goalsFor": 2,
+        "goalsAgainst": 1,
+        "goalDifference": 1,
         "position": 2
       },
       {
         "team": {
-          "name": "Katar",
-          "shortName": "KAT"
+          "name": "Iran",
+          "shortName": "IRA"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 3,
+        "playedGames": 3,
+        "won": 1,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 2,
+        "goalsFor": 4,
+        "goalsAgainst": 7,
+        "goalDifference": -3,
         "position": 3
       },
       {
         "team": {
-          "name": "İsviçre",
-          "shortName": "İSV"
+          "name": "Wales",
+          "shortName": "WAL"
         },
-        "points": 0,
-        "playedGames": 0,
+        "points": 1,
+        "playedGames": 3,
         "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "draw": 1,
+        "lost": 2,
+        "goalsFor": 1,
+        "goalsAgainst": 6,
+        "goalDifference": -5,
         "position": 4
       }
     ]
@@ -1581,62 +1561,62 @@ class MockData {
     "table": [
       {
         "team": {
-          "name": "Arjantin",
-          "shortName": "ARJ"
+          "name": "Argentina",
+          "shortName": "ARG"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 6,
+        "playedGames": 3,
+        "won": 2,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 1,
+        "goalsFor": 5,
+        "goalsAgainst": 2,
+        "goalDifference": 3,
         "position": 1
       },
       {
         "team": {
-          "name": "Polonya",
+          "name": "Poland",
           "shortName": "POL"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
+        "points": 4,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "goalsFor": 2,
+        "goalsAgainst": 2,
         "goalDifference": 0,
         "position": 2
       },
       {
         "team": {
-          "name": "Mısır",
-          "shortName": "MIS"
+          "name": "Mexico",
+          "shortName": "MEX"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "points": 4,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "goalsFor": 2,
+        "goalsAgainst": 3,
+        "goalDifference": -1,
         "position": 3
       },
       {
         "team": {
-          "name": "Yeni Zelanda",
-          "shortName": "YEN"
+          "name": "Saudi Arabia",
+          "shortName": "SAU"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 3,
+        "playedGames": 3,
+        "won": 1,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 2,
+        "goalsFor": 3,
+        "goalsAgainst": 5,
+        "goalDifference": -2,
         "position": 4
       }
     ]
@@ -1647,62 +1627,62 @@ class MockData {
     "table": [
       {
         "team": {
-          "name": "ABD",
-          "shortName": "ABD"
+          "name": "France",
+          "shortName": "FRA"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 6,
+        "playedGames": 3,
+        "won": 2,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 1,
+        "goalsFor": 6,
+        "goalsAgainst": 3,
+        "goalDifference": 3,
         "position": 1
       },
       {
         "team": {
-          "name": "Avustralya",
-          "shortName": "AVU"
+          "name": "Australia",
+          "shortName": "AUS"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 6,
+        "playedGames": 3,
+        "won": 2,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 1,
+        "goalsFor": 3,
+        "goalsAgainst": 4,
+        "goalDifference": -1,
         "position": 2
       },
       {
         "team": {
-          "name": "Paraguay",
-          "shortName": "PAR"
+          "name": "Tunisia",
+          "shortName": "TUN"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
+        "points": 4,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "goalsFor": 1,
+        "goalsAgainst": 1,
         "goalDifference": 0,
         "position": 3
       },
       {
         "team": {
-          "name": "Türkiye",
-          "shortName": "TÜR"
+          "name": "Denmark",
+          "shortName": "DEN"
         },
-        "points": 0,
-        "playedGames": 0,
+        "points": 1,
+        "playedGames": 3,
         "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "draw": 1,
+        "lost": 2,
+        "goalsFor": 1,
+        "goalsAgainst": 3,
+        "goalDifference": -2,
         "position": 4
       }
     ]
@@ -1713,62 +1693,62 @@ class MockData {
     "table": [
       {
         "team": {
-          "name": "İspanya",
-          "shortName": "İSP"
+          "name": "Japan",
+          "shortName": "JAP"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 6,
+        "playedGames": 3,
+        "won": 2,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 1,
+        "goalsFor": 4,
+        "goalsAgainst": 3,
+        "goalDifference": 1,
         "position": 1
       },
       {
         "team": {
-          "name": "Kosta Rika",
-          "shortName": "KOS"
+          "name": "Spain",
+          "shortName": "SPA"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "points": 4,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "goalsFor": 9,
+        "goalsAgainst": 3,
+        "goalDifference": 6,
         "position": 2
       },
       {
         "team": {
-          "name": "Almanya",
-          "shortName": "ALM"
+          "name": "Germany",
+          "shortName": "GER"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "points": 4,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "goalsFor": 6,
+        "goalsAgainst": 5,
+        "goalDifference": 1,
         "position": 3
       },
       {
         "team": {
-          "name": "Japonya",
-          "shortName": "JAP"
+          "name": "Costa Rica",
+          "shortName": "COS"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 3,
+        "playedGames": 3,
+        "won": 1,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 2,
+        "goalsFor": 3,
+        "goalsAgainst": 11,
+        "goalDifference": -8,
         "position": 4
       }
     ]
@@ -1779,62 +1759,62 @@ class MockData {
     "table": [
       {
         "team": {
-          "name": "Belçika",
-          "shortName": "BEL"
+          "name": "Morocco",
+          "shortName": "MOR"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
+        "points": 7,
+        "playedGames": 3,
+        "won": 2,
+        "draw": 1,
         "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "goalsFor": 4,
+        "goalsAgainst": 1,
+        "goalDifference": 3,
         "position": 1
       },
       {
         "team": {
-          "name": "İsveç",
-          "shortName": "İSV"
+          "name": "Croatia",
+          "shortName": "CRO"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
+        "points": 5,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 2,
         "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "goalsFor": 4,
+        "goalsAgainst": 1,
+        "goalDifference": 3,
         "position": 2
       },
       {
         "team": {
-          "name": "Fas",
-          "shortName": "FAS"
+          "name": "Belgium",
+          "shortName": "BEL"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "points": 4,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "goalsFor": 1,
+        "goalsAgainst": 2,
+        "goalDifference": -1,
         "position": 3
       },
       {
         "team": {
-          "name": "Hırvatistan",
-          "shortName": "HIR"
+          "name": "Canada",
+          "shortName": "CAN"
         },
         "points": 0,
-        "playedGames": 0,
+        "playedGames": 3,
         "won": 0,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 3,
+        "goalsFor": 2,
+        "goalsAgainst": 7,
+        "goalDifference": -5,
         "position": 4
       }
     ]
@@ -1845,62 +1825,62 @@ class MockData {
     "table": [
       {
         "team": {
-          "name": "Brezilya",
-          "shortName": "BRE"
+          "name": "Brazil",
+          "shortName": "BRA"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 6,
+        "playedGames": 3,
+        "won": 2,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 1,
+        "goalsFor": 3,
+        "goalsAgainst": 1,
+        "goalDifference": 2,
         "position": 1
       },
       {
         "team": {
-          "name": "Sırbistan",
-          "shortName": "SIR"
+          "name": "Switzerland",
+          "shortName": "SWI"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 6,
+        "playedGames": 3,
+        "won": 2,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 1,
+        "goalsFor": 4,
+        "goalsAgainst": 3,
+        "goalDifference": 1,
         "position": 2
       },
       {
         "team": {
-          "name": "İskoçya",
-          "shortName": "İSK"
+          "name": "Cameroon",
+          "shortName": "CAM"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
+        "points": 4,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "goalsFor": 4,
+        "goalsAgainst": 4,
         "goalDifference": 0,
         "position": 3
       },
       {
         "team": {
-          "name": "Kamerun",
-          "shortName": "KAM"
+          "name": "Serbia",
+          "shortName": "SER"
         },
-        "points": 0,
-        "playedGames": 0,
+        "points": 1,
+        "playedGames": 3,
         "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "draw": 1,
+        "lost": 2,
+        "goalsFor": 5,
+        "goalsAgainst": 8,
+        "goalDifference": -3,
         "position": 4
       }
     ]
@@ -1911,31 +1891,31 @@ class MockData {
     "table": [
       {
         "team": {
-          "name": "Portekiz",
+          "name": "Portugal",
           "shortName": "POR"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 6,
+        "playedGames": 3,
+        "won": 2,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 1,
+        "goalsFor": 6,
+        "goalsAgainst": 4,
+        "goalDifference": 2,
         "position": 1
       },
       {
         "team": {
-          "name": "Gana",
-          "shortName": "GAN"
+          "name": "South Korea",
+          "shortName": "SOU"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
+        "points": 4,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "goalsFor": 4,
+        "goalsAgainst": 4,
         "goalDifference": 0,
         "position": 2
       },
@@ -1944,293 +1924,29 @@ class MockData {
           "name": "Uruguay",
           "shortName": "URU"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
+        "points": 4,
+        "playedGames": 3,
+        "won": 1,
+        "draw": 1,
+        "lost": 1,
+        "goalsFor": 2,
+        "goalsAgainst": 2,
         "goalDifference": 0,
         "position": 3
       },
       {
         "team": {
-          "name": "Şili",
-          "shortName": "ŞIL"
+          "name": "Ghana",
+          "shortName": "GHA"
         },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
+        "points": 3,
+        "playedGames": 3,
+        "won": 1,
         "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 4
-      }
-    ]
-  },
-  {
-    "group": "GROUP_I",
-    "type": "TOTAL",
-    "table": [
-      {
-        "team": {
-          "name": "İtalya",
-          "shortName": "İTA"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 1
-      },
-      {
-        "team": {
-          "name": "Nijerya",
-          "shortName": "NIJ"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 2
-      },
-      {
-        "team": {
-          "name": "Kolombiya",
-          "shortName": "KOL"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 3
-      },
-      {
-        "team": {
-          "name": "Galler",
-          "shortName": "GAL"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 4
-      }
-    ]
-  },
-  {
-    "group": "GROUP_J",
-    "type": "TOTAL",
-    "table": [
-      {
-        "team": {
-          "name": "Hollanda",
-          "shortName": "HOL"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 1
-      },
-      {
-        "team": {
-          "name": "Senegal",
-          "shortName": "SEN"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 2
-      },
-      {
-        "team": {
-          "name": "Ekvador",
-          "shortName": "EKV"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 3
-      },
-      {
-        "team": {
-          "name": "Avusturya",
-          "shortName": "AVU"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 4
-      }
-    ]
-  },
-  {
-    "group": "GROUP_K",
-    "type": "TOTAL",
-    "table": [
-      {
-        "team": {
-          "name": "Fransa",
-          "shortName": "FRA"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 1
-      },
-      {
-        "team": {
-          "name": "Peru",
-          "shortName": "PER"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 2
-      },
-      {
-        "team": {
-          "name": "Danimarka",
-          "shortName": "DAN"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 3
-      },
-      {
-        "team": {
-          "name": "Tunus",
-          "shortName": "TUN"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 4
-      }
-    ]
-  },
-  {
-    "group": "GROUP_L",
-    "type": "TOTAL",
-    "table": [
-      {
-        "team": {
-          "name": "İngiltere",
-          "shortName": "İNG"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 1
-      },
-      {
-        "team": {
-          "name": "Mali",
-          "shortName": "MAL"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 2
-      },
-      {
-        "team": {
-          "name": "Yunanistan",
-          "shortName": "YUN"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
-        "position": 3
-      },
-      {
-        "team": {
-          "name": "Cezayir",
-          "shortName": "CEZ"
-        },
-        "points": 0,
-        "playedGames": 0,
-        "won": 0,
-        "draw": 0,
-        "lost": 0,
-        "goalsFor": 0,
-        "goalsAgainst": 0,
-        "goalDifference": 0,
+        "lost": 2,
+        "goalsFor": 5,
+        "goalsAgainst": 7,
+        "goalDifference": -2,
         "position": 4
       }
     ]

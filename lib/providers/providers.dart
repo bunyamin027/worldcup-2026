@@ -5,8 +5,8 @@ import '../services/api_service.dart';
 import '../models/static_fixtures.dart';
 
 // ─── Sabitler ────────────────────────────────────────────────────────────────
-const int _wcLeague = 1; // FIFA World Cup 2026 league ID
-const int _wcSeason = 2026;
+const int _globalLeague = 1; // Global Football 2026 league ID
+const int _globalSeason = 2026;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 1. ApiService Provider
@@ -26,7 +26,7 @@ final todayFixturesProvider =
   }
   final dateString = '${targetDate.year}-${targetDate.month.toString().padLeft(2, '0')}-${targetDate.day.toString().padLeft(2, '0')}';
 
-  final todayMatches = worldCup2026StaticFixtures.where((match) {
+  final todayMatches = globalFootballStaticFixtures.where((match) {
     return match['utcDate'].toString().startsWith(dateString);
   }).toList();
 
@@ -69,11 +69,7 @@ final liveFixturesProvider =
 // ─────────────────────────────────────────────────────────────────────────────
 // 3. Puan Durumu Provider
 // ─────────────────────────────────────────────────────────────────────────────
-final standingsProvider =
-    FutureProvider.autoDispose<List<dynamic>>((ref) async {
-  final api = ref.watch(apiServiceProvider);
-  return api.getStandings();
-});
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 4. Seçili Maç Detayı Providers
@@ -115,7 +111,7 @@ final fixtureStatsProvider =
 final topScorersProvider =
     FutureProvider.autoDispose<Map<String, dynamic>>((ref) async {
   final api = ref.watch(apiServiceProvider);
-  return api.getTopScorers(league: _wcLeague, season: _wcSeason);
+  return api.getTopScorers(league: _globalLeague, season: _globalSeason);
 });
 
 /// Takım bilgisi – parametre ile

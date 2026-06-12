@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _fetchData() async {
     setState(() {
-      _allFixtures = worldCup2026StaticFixtures;
+      _allFixtures = globalFootballStaticFixtures;
       _isLoading = false;
     });
   }
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E21), // Derin siber uzay mavisi
       appBar: AppBar(
-        title: const Text('FOOTBALL 2026 LIVE', style: TextStyle(color: Colors.cyan, fontWeight: FontWeight.bold, letterSpacing: 2)),
+        title: const Text('GLOBAL FOOTBALL LIVE', style: TextStyle(color: Colors.cyan, fontWeight: FontWeight.bold, letterSpacing: 2)),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,

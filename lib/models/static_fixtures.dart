@@ -1,4 +1,4 @@
-final List<Map<String, dynamic>> worldCup2026StaticFixtures = [
+final List<Map<String, dynamic>> globalFootballStaticFixtures = [
   // Day 1
   {'utcDate': '2026-06-11T22:00:00', 'homeTeam': {'name': 'Meksika'}, 'awayTeam': {'name': 'Güney Afrika'}},
   // Day 2
